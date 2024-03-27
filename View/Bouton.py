@@ -1,5 +1,5 @@
 
-from Render.Render_image import Image
+from Image import Image
 
 class Button(Image):
     def __init__(self, canvas, x, y, image_path, command):
