@@ -39,8 +39,8 @@ class Authentication:
         return True
     
     def create_account(self, name, firstname, email, password):
-        self.password_enter
-        if self.password_enter == True :
+        check_password = self.password_enter(password)
+        if check_password == True :
             self.user_repo.create_user(name, firstname, email, password)
             User(name, firstname, email, password)
         else :
