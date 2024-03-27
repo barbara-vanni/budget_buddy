@@ -1,8 +1,8 @@
-from Db import Db
+from Model.Db import Db
 
 class RequestDb:
     def __init__(self):
-        self.__db = Db(host="localhost", user="root", password="rootequipe7+", database="budget_buddy")
+        self.__db = Db(host="localhost", user="root", password="Vcassis13*", database="budget_buddy")
 
     def create(self, table, data):
             columns = ', '.join(data.keys())
