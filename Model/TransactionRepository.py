@@ -1,10 +1,17 @@
 from RequestDb import RequestDb
+'''
+TransactionRepository class is a child class of RequestDb class.
+It is used to interact with the transaction table in the database.
+'''
 
 class TransactionRepository(RequestDb):
     def __init__(self):
         super().__init__()
 
     def create_transaction(self, date, description, amount, type, category, id_user):
+        '''
+        Create a transaction in the database
+        '''
         if type == 'credit':
             self.create('transaction', {
                 'date': date,
@@ -27,12 +34,21 @@ class TransactionRepository(RequestDb):
             print('Type must be credit or debit')
 
     def read_transaction(self, conditions=None):
+        '''
+        Read transaction from the database
+        '''
         return self.read('transaction', conditions)
 
     def update_transaction(self, data, conditions=None):
+        '''
+        Update transaction in the database
+        '''
         self.update('transaction', data, conditions)
 
     def delete_transaction(self, conditions):
+        '''
+        Delete transaction from the database
+        '''
         self.delete('transaction', conditions)
 
 
