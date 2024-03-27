@@ -16,11 +16,14 @@ class Authentication:
         if user exist, check the input password 
         '''
         user_data = self.user_repo.read_user(conditions=f"mail = '{mail}'")
+
+
+
         # if the user exists in the database
-        if user_data and isinstance(user_data, tuple) and len(user_data) > 0:
+        if user_data:
+
             # collect the hashed password from the Db
-            hashed_password_db = user_data[0]['password']
-            print("mdp du la db :", hashed_password_db)
+            hashed_password_db = user_data[0][4]
 
             # Hash the password give by the user 
             password_bytes = password.encode('utf-8')
@@ -32,6 +35,7 @@ class Authentication:
             if hashed_password_input == hashed_password_db:
                 return True
         return False   
+
 
     def password_enter(self, password):
         '''
