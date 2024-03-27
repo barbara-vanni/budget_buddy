@@ -24,5 +24,4 @@ class Image():
         return self.x, self.y
 
     def get_size(self):
-        print('a')
         return self.image.width(), self.image.height()

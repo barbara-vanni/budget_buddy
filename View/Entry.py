@@ -25,5 +25,4 @@ class CustomEntry:
 
     def destroy_entry(self):
         self.entry.destroy()
-        print('a')
         self.frame.destroy()
