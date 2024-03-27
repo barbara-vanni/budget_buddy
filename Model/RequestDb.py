@@ -17,6 +17,7 @@ class RequestDb:
         query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
         self.__db.executeQuery(query, tuple(data.values()))
 
+
     def read(self, table, conditions=None):
         '''
         Read records from the database
@@ -25,6 +26,7 @@ class RequestDb:
         if conditions:
             query += f" WHERE {conditions}"
         return self.__db.fetch(query)
+
 
     def update(self, table, data, conditions=None):
         '''
@@ -35,6 +37,7 @@ class RequestDb:
         if conditions:
             query += f" WHERE {conditions}"
         self.__db.executeQuery(query, tuple(data.values()))
+
 
     def delete(self, table, conditions):
         '''

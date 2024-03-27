@@ -20,11 +20,13 @@ class UserRepository(RequestDb):
         hashed_password = hash_password.hexdigest()
         self.create('user', {'name': name, 'firstname': firstname, 'mail': mail, 'password': hashed_password})
 
+
     def read_user(self, conditions=None):
         '''
         Read user from the database
         '''
         return self.read('user', conditions)
+
 
     def update_user(self, data, conditions=None):
         '''
@@ -37,19 +39,10 @@ class UserRepository(RequestDb):
             data['password'] = hash_password.hexdigest()
         self.update('user', data, conditions)
     
+
     def delete_user(self, conditions):
         '''
         Delete user from the database
         '''
         self.delete('user', conditions)
-
-# user_repo = UserRepository()
-# user_repo.create_user(name='Jean', firstname='Jacques', mail='jj@gmail.com', password='pass147258+')
-# user_repo.read_user()
-# print(user_repo.read_user())
-# user_repo.update_user({'name': 'Jean', 'firstname': 'Jacques', 'mail': 'jb@gmail.com', 'password': '7258+'})
-# print(user_repo.read_user())
-# user_repo.delete_user('mail = "jb@gmail.com"')
-# print(user_repo.read_user())
-
 
