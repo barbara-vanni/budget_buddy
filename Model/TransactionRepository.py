@@ -41,19 +41,16 @@ class TransactionRepository(RequestDb):
         else:
             print('Type must be credit or debit')
         self.set_transaction_list(transaction_object)
-        # print(self.transaction_list)
 
 
-    def read_transaction(self, conditions=None):
+    def read_transaction(self, id_user, transaction_object):
         '''
-        Read transaction from the database
+        Read transactions from the database for a specific user
         '''
-        return self.read('transaction', conditions)
-
-
-
-
-
+        conditions = f"id_user = {id_user}"
+        transactions_from_db = self.read('transaction', conditions)
+        transactions = [transaction for transaction in transactions_from_db if not all(attr is None for attr in transaction)]
+        return transactions
 
 
     def update_transaction(self, data, conditions=None):

@@ -24,46 +24,18 @@ try :
             category = input('Enter your category: ')
 
         elif choice == '2':
-            print(budget.total_account(1))
+            id_user = input('Enter your user: ')
+            transaction_object = Transaction(None, None, None, None, None, id_user)
+            print(transaction_repo.read_transaction(id_user, transaction_object))
         else:
             running = False
 
         transaction_object = Transaction(date, description, amount, types, category, id_user)
-        print(vars(transaction_object))
         transaction_repo.set_transaction_list(transaction_object)
-        print(transaction_repo.get_transaction_list())
         budget = Budget(transaction_object)
         budget.create_budget()
-        # print(budget.total_account(1))
-        # print(budget.create_budget(1, '2021-07-07', 'Pv', 1000, 'debit', 'Pv'))
-        # print(budget.create_budget(1,'2021-05-05', 'Loyer', 100, 'debit', 'Loyer'))
-        # print(budget.read_budget(1))
-        # print(budget.debit_credit(1))
-        # print(budget.overdraft(1))
+
         # running = False
 
 except Exception as e:
     print(f"Error: {e}")
-
-
-        # auth = Authentication()
-        # choice = input('Enter your choice: ')
-        # if choice == '1':
-        #     mail = input('Enter your mail: ')
-        #     password = input('Enter your password: ')
-        #     print ('mail :', mail, 'password :', password )
-        #     if auth.authenticate(mail, password):
-        #         print('You are connected')
-        #     else:
-        #         print('Wrong mail or password')
-        # elif choice == '2':
-        #     name = input('Enter your name: ')
-        #     firstname = input('Enter your firstname: ')
-        #     mail = input('Enter your mail: ')
-        #     password = input('Enter your password: ')
-        #     auth.create_account(name, firstname, mail, password)
-        # elif choice == '3':
-        #     print('Goodbye')
-        #     running = False
-        # else:
-        #     print('Enter a valid choice')

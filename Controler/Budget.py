@@ -23,11 +23,18 @@ class Budget:
 
     def read_budget(self, id_user):
         '''
-        method to read a budget
+        Méthode to read a budget
         '''
-
-        transactions = self.transaction_repo.read_transaction(conditions=f"id_user = {id_user}")
+        transactions = self.__transaction_repo.get_transaction_list()
+        
+        if not transactions:
+            transactions_from_db = self.__transaction_repo.read_transaction(conditions=f"id_user = {id_user}")
+            for transaction in transactions_from_db:
+                self.__transaction_repo.set_transaction_list(transaction)
+            transactions = self.__transaction_repo.get_transaction_list()
         return transactions
+
+    
 
 
 
