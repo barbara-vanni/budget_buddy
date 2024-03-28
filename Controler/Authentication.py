@@ -17,10 +17,11 @@ class Authentication:
         '''
         user_data = self.user_repo.read_user(conditions=f"mail = '{mail}'")
 
+        mail_user = user_data[0][1]
 
 
         # if the user exists in the database
-        if user_data:
+        if mail_user == mail :
 
             # collect the hashed password from the Db
             hashed_password_db = user_data[0][4]
