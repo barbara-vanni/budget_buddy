@@ -17,13 +17,7 @@ class Screen():
 
     def get_window_canvas(self):
         return self.__window_canvas
-    
-    # def draw_canvas(self):
-    #     # self.__screen.title(f"Budget {fisrt_name}, {last_name}")
-    #     self.__canvas = self.__canvas
-    #     self.__canvas.pack()
-    #     return self.__canvas
-    
+        
     def draw_window_canvas(self):
         self.__window_canvas = tk.Canvas(self.__screen, width = self.__width - 150, height = self.__height - 150)
         self.__window_canvas.pack()
