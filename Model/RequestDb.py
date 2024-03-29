@@ -25,6 +25,7 @@ class RequestDb:
         query = f"SELECT * FROM {table}"
         if conditions:
             query += f" WHERE {conditions}"
+        print(query)
         return self.__db.fetch(query)
 
 

@@ -1,5 +1,4 @@
 from Model.RequestDb import RequestDb
-from Model.Transaction import Transaction   
 '''
 TransactionRepository class is a child class of RequestDb class.
 It is used to interact with the transaction table in the database.
@@ -8,13 +7,6 @@ It is used to interact with the transaction table in the database.
 class TransactionRepository(RequestDb):
     def __init__(self):
         super().__init__()
-        self.transaction_list = []
-
-    # Getters and Setters for transaction_list
-    def get_transaction_list(self):
-        return self.transaction_list
-    def set_transaction_list(self, transaction_object):
-        self.transaction_list.append(transaction_object)
 
     def create_transaction(self, transaction_object):
         '''
@@ -34,23 +26,19 @@ class TransactionRepository(RequestDb):
                 'date': transaction_object.get_date(),
                 'description': transaction_object.get_description(),
                 'amount': transaction_object.get_amount(),
-                'types': 'debit',
+                'types': 'debit', 
                 'category': transaction_object.get_category(),
                 'id_user': transaction_object.get_id_user()
             })
         else:
             print('Type must be credit or debit')
-        self.set_transaction_list(transaction_object)
 
 
-    def read_transaction(self, id_user, transaction_object):
+    def read_transaction(self, conditions=None):
         '''
-        Read transactions from the database for a specific user
+        Read transaction from the database
         '''
-        conditions = f"id_user = {id_user}"
-        transactions_from_db = self.read('transaction', conditions)
-        transactions = [transaction for transaction in transactions_from_db if not all(attr is None for attr in transaction)]
-        return transactions
+        return self.read('transaction', conditions)
 
 
     def update_transaction(self, data, conditions=None):
@@ -66,5 +54,51 @@ class TransactionRepository(RequestDb):
         '''
         self.delete('transaction', conditions)
 
-
     
+    def print_user_transactions(self, id_user):
+        '''
+        Print all transactions for a specific user
+        '''
+        return self.read_transaction(f'id_user = {id_user}')
+
+
+    def print_specific_date(self, date, id_user):
+        '''
+        Print all transactions for a specific date
+        '''
+        return self.read_transaction(f'date = "{date}" AND id_user = {id_user}')
+
+
+    def print_by_category(self, category, id_user):
+        '''
+        Print all transactions by category
+        '''
+        return self.read_transaction(f'category = "{category}" AND id_user = {id_user}')
+
+
+    def print_by_type(self, types, id_user):
+        '''
+        Print all transactions by types
+        '''
+        return self.read_transaction(f'types = "{types}" AND id_user = {id_user}')
+
+
+    def print_by_ascending_money(self, id_user):
+        '''
+        Print all transactions by ascending money
+        '''
+        return self.read_transaction(f'id_user = {id_user} ORDER BY amount ASC')
+
+
+    def print_by_descending_money(self, id_user):
+        '''
+        Print all transactions by descending money
+        '''
+        return self.read_transaction(f'id_user = {id_user} ORDER BY amount DESC')
+
+
+    def print_between_dates(self, start_date, end_date, id_user):
+        '''
+        Print all transactions between two dates
+        '''
+        return self.read_transaction(f'date BETWEEN "{start_date}" AND "{end_date}" AND id_user = {id_user}')

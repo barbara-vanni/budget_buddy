@@ -5,8 +5,8 @@ from Model.TransactionRepository import TransactionRepository
 
 try : 
     running = True
-
-    transaction_repo = TransactionRepository()
+    # transaction_repo = TransactionRepository()
+    budget = Budget()
     while running :
         print('1. Create Transaction')
         print('2. Read User Transactions')
@@ -26,18 +26,62 @@ try :
             amount = input('Enter your amount: ')
             types = input('Enter your type: ')
             category = input('Enter your category: ')
+            transaction_object = Transaction(date, description, amount, types, category, id_user)
+            budget.create_budget(transaction_object)
 
         elif choice == '2':
             id_user = input('Enter your user: ')
-            transaction_object = Transaction(None, None, None, None, None, id_user)
-            print(transaction_repo.read_transaction(id_user, transaction_object))
+            user_transaction_list = budget.read_budget(id_user)
+
+        elif choice == '3':
+            id_user = input('Enter your user: ')
+            total = budget.total_account(id_user)
+            overdraft = budget.overdraft(id_user)
+            print(total)
+            print(overdraft)
+
+        elif choice == '4':
+            id_user = input('Enter your user: ')
+            total = budget.debit_credit(id_user)
+            print(total)
+
+        elif choice == '5':
+            id_user = input('Enter your user: ')
+            date = input('Enter your date(YYYY-MM-DD): ')
+            one_date_list = budget.read_specific_date(id_user, date)
+            print(one_date_list)
+
+        elif choice == '6':
+            id_user = input('Enter your user: ')
+            category = input('Enter your category: ')
+            category_list = budget.read_specific_category(category, id_user)
+            print(category_list)
+
+        elif choice == '7':
+            id_user = input('Enter your user: ')
+            types = input('Enter your type: ')
+            type_list = budget.read_specific_type(types, id_user)
+            print(type_list)
+
+        elif choice == '8':
+            id_user = input('Enter your user: ')
+            ascending_list = budget.read_by_ascending_money(id_user)
+            print(ascending_list)
+
+        elif choice == '9':
+            id_user = input('Enter your user: ')
+            descending_list = budget.read_by_descending_money(id_user)
+            print(descending_list)
+
+        elif choice == '10':
+            id_user = input('Enter your user: ')
+            date1 = input('Enter your first date(YYYY-MM-DD): ')
+            date2 = input('Enter your second date(YYYY-MM-DD): ')
+            between_dates = budget.read_between_dates(id_user, date1, date2)
+            print(between_dates)
+
         else:
             running = False
-
-        transaction_object = Transaction(date, description, amount, types, category, id_user)
-        transaction_repo.set_transaction_list(transaction_object)
-        budget = Budget(transaction_object)
-        budget.create_budget()
 
         # running = False
 
