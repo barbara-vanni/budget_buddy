@@ -73,7 +73,6 @@ class Budget:
         else:
             return 'You are not in overdraft'
 
-
     def read_specific_date(self, id_user, date):
         '''
         method to read a budget by specific date

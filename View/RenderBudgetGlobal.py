@@ -4,8 +4,6 @@ from View.Button import Button
 from View.Screen import Screen
 import tkinter as tk
 
-custom_entries = []
-
 class RenderBudget:
     def __init__(self):
         self.tab_object = RenderTab()
@@ -40,25 +38,25 @@ class RenderBudget:
         transaction_label.place(x=730, y=40)
 
         credit_button = Button(self.tab_object.get_window_canvas(), 750, 100, "./assets/images/credit_button.png", None)
-        credit_button.bind('<Button-1>', lambda event: self.render_credit())
+        credit_button.bind('<Button-1>', lambda event: self.tab_object.render_credit())
 
         debit_button = Button(self.tab_object.get_window_canvas(), 760, 160, "./assets/images/debit_button.png", None)
-        debit_button.bind('<Button-1>', lambda event: self.render_debit())
+        debit_button.bind('<Button-1>', lambda event: self.tab_object.render_debit())
 
         date_button = Button(self.tab_object.get_window_canvas(), 765, 220, "./assets/images/date_button.png", None)
-        date_button.bind('<Button-1>', lambda event: self.render_date())
+        date_button.bind('<Button-1>', lambda event: self.tab_object.render_date())
 
         category_button = Button(self.tab_object.get_window_canvas(), 745, 280, "./assets/images/category_button.png", None)
-        category_button.bind('<Button-1>', lambda event: self.render_category())
+        category_button.bind('<Button-1>', lambda event: self.tab_object.render_category())
 
         types_button = Button(self.tab_object.get_window_canvas(), 770, 340, "./assets/images/type_button.png", None)
-        types_button.bind('<Button-1>', lambda event: self.render_types())
+        types_button.bind('<Button-1>', lambda event: self.tab_object.render_types())
 
         orders_button = Button(self.tab_object.get_window_canvas(), 700, 400, "./assets/images/amount_sort_button.png", None)
-        orders_button.bind('<Button-1>', lambda event: self.render_orders())
+        orders_button.bind('<Button-1>', lambda event: self.tab_object.render_orders())
 
         periods_button = Button(self.tab_object.get_window_canvas(), 720, 460, "./assets/images/date_sort_button.png", None)
-        periods_button.bind('<Button-1>', lambda event: self.render_periods())
+        periods_button.bind('<Button-1>', lambda event: self.tab_object.render_periods())
 
         self.tab_object.get_screen_object().get_screen().mainloop()
         self.tab_object.get_canvas().update()
@@ -73,10 +71,10 @@ class RenderBudget:
         budget_label.place(x=760, y=40)
 
         soldes_button = Button(self.tab_object.get_window_canvas(), 740, 200, "./assets/images/balance_button.png", None)
-        soldes_button.bind('<Button-1>', lambda event: self.render_soldes())
+        soldes_button.bind('<Button-1>', lambda event: self.tab_object.render_soldes())
 
         graphiques_button = Button(self.tab_object.get_window_canvas(), 770, 350, "./assets/images/graph_button.png", None)
-        graphiques_button.bind('<Button-1>', lambda event: self.render_graphiques())
+        graphiques_button.bind('<Button-1>', lambda event: self.tab_object.render_graphiques())
 
         self.tab_object.get_screen_object().get_screen().mainloop()
         self.tab_object.get_canvas().update()
