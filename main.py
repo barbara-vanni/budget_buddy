@@ -8,12 +8,16 @@ try :
 
     transaction_repo = TransactionRepository()
     while running :
-        print('1. User connection')
-        print('2. Date')
-        print('3. Description')
-        print('4. Amount')
-        print('5. Types')
-        print('6. Category')
+        print('1. Create Transaction')
+        print('2. Read User Transactions')
+        print('3. Total Account')
+        print('4. Debit Credit')
+        print('5. Specific Date')
+        print('6. Specific Category')
+        print('7. Specific Type')
+        print('8. By ascending order')
+        print('9. By descending order')
+        print('10. Between two dates')
         choice = input('Enter your choice: ')
         if choice == '1':
             id_user = input('Enter your user: ')

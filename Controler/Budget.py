@@ -21,27 +21,33 @@ class Budget:
         self.__transaction_repo.set_transaction_list(self.__transaction_object)
 
 
-    def read_budget(self, id_user):
+    # def read_budget(self, id_user):
+    #     '''
+    #     Méthode to read a budget
+    #     '''
+    #     transactions = self.__transaction_repo.get_transaction_list()
+        
+    #     if not transactions:
+    #         transactions_from_db = self.__transaction_repo.read_transaction(conditions=f"id_user = {id_user}")
+    #         for transaction in transactions_from_db:
+    #             self.__transaction_repo.set_transaction_list(transaction)
+    #         transactions = self.__transaction_repo.get_transaction_list()
+    #     return transactions
+
+    def read_budget(self, id_user, transaction_object):
         '''
         Méthode to read a budget
         '''
         transactions = self.__transaction_repo.get_transaction_list()
         
         if not transactions:
-            transactions_from_db = self.__transaction_repo.read_transaction(conditions=f"id_user = {id_user}")
+            transactions_from_db = self.__transaction_repo.read_transaction(conditions=f"id_user = {id_user}", transaction_object=transaction_object)
             for transaction in transactions_from_db:
                 self.__transaction_repo.set_transaction_list(transaction)
             transactions = self.__transaction_repo.get_transaction_list()
         return transactions
 
     
-
-
-
-
-
-
-
 
     def total_account(self, id_user):
         '''
