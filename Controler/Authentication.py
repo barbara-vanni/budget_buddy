@@ -6,9 +6,10 @@ import hashlib
 contains the method authenticate, create_account '''
 
 class Authentication:
-    def __init__(self):
+    def __init__(self, name=None, firstname=None, mail=None, password=None):
         self.user_repo = UserRepository()
-        self.user = User()
+        self.user = User(name, firstname, mail, password)
+
 
     def authenticate(self, mail, password):
         '''
@@ -19,6 +20,8 @@ class Authentication:
 
         mail_user = user_data[0][1]
 
+        log_in = self.render_auth.render_log_in()
+        print(log_in)
 
         # if the user exists in the database
         if mail_user == mail :
@@ -55,5 +58,6 @@ class Authentication:
         if check_password == True :
             self.user_repo.create_user(name, firstname, mail, password)
             User(name, firstname, mail, password)
+            return True
         else :
             print('Enter a valid password')
