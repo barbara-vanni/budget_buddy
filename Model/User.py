@@ -1,7 +1,7 @@
 class User:
     def __init__(self, name, firstname, mail, password):
         self.name = name
-        self.surname = surname
+        self.firstname = firstname
         self.mail = mail
         self.password = password
 
@@ -12,10 +12,10 @@ class User:
         self.name = name
 
     #getter and setter for surname
-    def get_surname(self):
-        return self.surname
-    def set_surname(self, surname):
-        self.surname = surname
+    def get_firstname(self):
+        return self.firstname
+    def set_firstname(self, firstname):
+        self.firstname = firstname
 
     #getter and setter for mail
     def get_mail(self):

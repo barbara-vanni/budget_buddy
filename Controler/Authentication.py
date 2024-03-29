@@ -1,4 +1,3 @@
-import requests
 from Model.User import User
 from Model.UserRepository import UserRepository
 import hashlib
@@ -9,6 +8,7 @@ contains the method authenticate, create_account '''
 class Authentication:
     def __init__(self):
         self.user_repo = UserRepository()
+        self.user = User()
 
     def authenticate(self, mail, password):
         '''
@@ -34,7 +34,7 @@ class Authentication:
 
             # Compare the hashed password of the db and the one we just hash
             if hashed_password_input == hashed_password_db:
-                return True
+                return User(user_data[0][1], user_data[0][2], user_data[0][3], user_data[0][4])
         return False   
 
 
