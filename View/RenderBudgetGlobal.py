@@ -30,13 +30,13 @@ class RenderBudget:
         self.draw_canvas()
         background_image.draw()
 
-        transcation_button= Button(self.canvas, 300, 0, "./assets/images/transaction_button.png", None)
+        transcation_button= Button(self.canvas, 200, 15, "./assets/images/transaction_button.png", None)
         transcation_button.bind('<Button-1>', lambda event: self.render_transaction())
 
-        budget_button = Button(self.canvas, 600, 0, "./assets/images/budget_button.png", None)
+        budget_button = Button(self.canvas, 500, 15, "./assets/images/budget_button.png", None)
         budget_button.bind('<Button-1>', lambda event: self.render_budget())
 
-        deconnexion_button = Button(self.canvas, 800, 0, "./assets/images/deco_button.png", None)
+        deconnexion_button = Button(self.canvas, 800, 11, "./assets/images/deco_button.png", None)
         deconnexion_button.bind('<Button-1>', lambda event: self.render_deconnexion())
 
         welcome_label = tk.Label(self.canvas, text="Welcome", font=("Helvetica", 16), bg="#0045ab", fg="white")
