@@ -7,8 +7,8 @@ import tkinter as tk
 custom_entries = []
 
 class RenderBudget:
-    def __init__(self):
-        self.screen_object = Screen()
+    def __init__(self, screen):
+        self.screen_object = screen
         self.canvas = self.screen_object.get_canvas()
         # self.window_canvas = self.screen_object.get_window_canvas()
 
@@ -74,8 +74,7 @@ class RenderBudget:
 
     #     self.screen_object.get_screen().mainloop()
 
-        
-render = RenderBudget()
+
 
 
 

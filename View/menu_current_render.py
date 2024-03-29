@@ -1,8 +1,8 @@
-# from View.RenderAuthentication import auth
-from View.RenderBudgetGlobal import render
+from View.RenderAuthentication import auth
 
-state = render.render_global_menu
-# state = auth.render_main_menu
+
+
+state = auth.render_main_menu
 
 def get_state():
     return state

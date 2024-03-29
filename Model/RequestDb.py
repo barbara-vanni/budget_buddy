@@ -7,7 +7,7 @@ It uses the Db class to establish a connection to the database and execute queri
 
 class RequestDb:
     def __init__(self):
-        self.__db = Db(host="localhost", user="root", password="rootequipe7+", database="budget_buddy")
+        self.__db = Db(host="localhost", user="root", password="Vcassis13*", database="budget_buddy")
 
     def create(self, table, data):
         '''

@@ -4,7 +4,8 @@ from View.Button import Button
 from View.Screen import Screen
 from Controler.Authentication import Authentication
 from View.menu_current_render import *
-# from View.RenderBudgetGlobal import RenderBudgetGlobal
+import View.menu_current_render as menu_current_render
+from View.RenderBudgetGlobal import RenderBudget
 
 
 class RenderAuthentication:
@@ -13,6 +14,7 @@ class RenderAuthentication:
         self.canvas = self.screen_object.get_canvas()
         self.custom_entries = []
         self.authentication = Authentication()
+        self.menu_global = RenderBudget(self.screen_object)
 
     def get_screen_object(self):
         return self.screen_object
@@ -79,7 +81,7 @@ class RenderAuthentication:
         password = entry6
         if self.authentication.authenticate(email, password):
             print("Connected")
-            # set_state(auth.render_main_menu)
+            menu_current_render.set_state(self.menu_global.render_global_menu)
         else:
             print("Wrong mail or password")
 
