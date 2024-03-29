@@ -1,4 +1,4 @@
-from View.RenderAuthentication import auth
+# from View.RenderAuthentication import auth
 from View.RenderBudgetGlobal import render
 
 state = render.render_global_menu

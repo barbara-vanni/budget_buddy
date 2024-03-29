@@ -1,8 +1,8 @@
-import tkinter as tk
 from View.Entry import CustomEntry
 from View.Image import Image
 from View.Button import Button
 from View.Screen import Screen
+import tkinter as tk
 
 custom_entries = []
 
@@ -22,12 +22,14 @@ class RenderBudget:
     #     self.screen_object.get_window_canvas().pack()
 
     def render_global_menu(self):
+
         for entry in custom_entries:
             entry.destroy_entry()
-
-        background_image = Image(self.canvas, 0, 0, './assets/bcg_menu.png')
+        
+        background_image = Image(self.canvas, 0, 0, './assets/images/bcg_menu_global.png')
         self.draw_canvas()
         background_image.draw()
+
         transcation_button= Button(self.canvas, 300, 0, "./assets/images/transaction_button.png", None)
         transcation_button.bind('<Button-1>', lambda event: self.render_transaction())
 
@@ -37,9 +39,9 @@ class RenderBudget:
         deconnexion_button = Button(self.canvas, 800, 0, "./assets/images/deco_button.png", None)
         deconnexion_button.bind('<Button-1>', lambda event: self.render_deconnexion())
 
-        welcome_label = tk.Label(self.canvas, text="Welcome", font=("Helvetica", 16), bg="white")
-        welcome_label.place(x=0, y=0)
-        print('test4')
+        welcome_label = tk.Label(self.canvas, text="Welcome", font=("Helvetica", 16), bg="#0045ab", fg="white")
+        welcome_label.place(x=10, y=20)
+
         self.screen_object.get_screen().mainloop()
         self.canvas.update()
 
@@ -74,5 +76,6 @@ class RenderBudget:
 
         
 render = RenderBudget()
+
 
 
