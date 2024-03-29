@@ -1,5 +1,3 @@
-
-# from View.RenderAuthentication import RenderAuthentication
 from View.menu_current_render import *
 from Controler.Budget import Budget
 from Model.Transaction import Transaction

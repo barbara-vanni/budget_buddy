@@ -6,8 +6,7 @@ class Screen():
         self.__width = 900
         self.__height = 600
         self.__canvas = tk.Canvas(self.__screen, width=self.__width, height=self.__height)
-        self.__window_canvas = None
-
+        self.__window_canvas = tk.Canvas(self.__screen, width=self.__width, height=self.__height - 150)
 
     def get_screen(self):
         return self.__screen
@@ -19,5 +18,5 @@ class Screen():
         return self.__window_canvas
         
     def draw_window_canvas(self):
-        self.__window_canvas = tk.Canvas(self.__screen, width = self.__width - 150, height = self.__height - 150)
+        self.__window_canvas = tk.Canvas(self.__screen, width = self.__width, height = self.__height - 100)
         self.__window_canvas.pack()
