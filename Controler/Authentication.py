@@ -20,9 +20,6 @@ class Authentication:
 
         mail_user = user_data[0][1]
 
-        log_in = self.render_auth.render_log_in()
-        print(log_in)
-
         # if the user exists in the database
         if mail_user == mail :
 
