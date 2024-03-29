@@ -10,22 +10,21 @@ class RenderBudget:
     def __init__(self):
         self.screen_object = Screen()
         self.canvas = self.screen_object.get_canvas()
-        # self.window_canvas = self.screen_object.get_window_canvas()
+        self.window_canvas = self.screen_object.get_window_canvas()
 
     def get_screen_object(self):
         return self.screen_object
 
     def draw_canvas(self):
-        self.canvas.pack()
+        self.canvas.pack(side = tk.TOP)
 
-    # def draw_canvas_window(self):
-    #     self.screen_object.get_window_canvas().pack()
+    def draw_window_canvas(self):
+        self.window_canvas.pack(fill=tk.BOTH, expand=True)
+        self.window.canvas.place(x=0, y=100)
+        # self.window_canvas.lift()
 
     def render_global_menu(self):
 
-        for entry in custom_entries:
-            entry.destroy_entry()
-        
         background_image = Image(self.canvas, 0, 0, './assets/images/bcg_menu_global.png')
         self.draw_canvas()
         background_image.draw()
@@ -45,34 +44,35 @@ class RenderBudget:
         self.screen_object.get_screen().mainloop()
         self.canvas.update()
 
-    # def render_transaction(self):
-    #     self.draw_window_canvas()
+    def render_transaction(self):
+        self.draw_window_canvas()
 
-    #     transaction_label = tk.Label(self.canvas_window, text="Transaction", font=("Helvetica", 16), bg="white")
-    #     transaction_label.place(x=770, y=0)
+        transaction_label = tk.Label(self.window_canvas, text="Transaction", font=("Helvetica", 16), bg="white")
+        transaction_label.place(x=770, y=0)
 
-    #     credit_button = Button(self.canvas_window, 750, 150, "images/credit_button.png", None)
-    #     credit_button.bind('<Button-1>', lambda event: self.render_credit())
+        # credit_button = Button(self.canvas_window, 750, 150, "images/credit_button.png", None)
+        # credit_button.bind('<Button-1>', lambda event: self.render_credit())
 
-    #     debit_button = Button(self.canvas_window, 750, 200, "images/debit_button.png", None)
-    #     debit_button.bind('<Button-1>', lambda event: self.render_debit())
+        # debit_button = Button(self.canvas_window, 750, 200, "images/debit_button.png", None)
+        # debit_button.bind('<Button-1>', lambda event: self.render_debit())
 
-    #     date_button = Button(self.canvas_window, 750, 250, "images/date_button.png", None)
-    #     date_button.bind('<Button-1>', lambda event: self.render_date())
+        # date_button = Button(self.canvas_window, 750, 250, "images/date_button.png", None)
+        # date_button.bind('<Button-1>', lambda event: self.render_date())
 
-    #     category_button = Button(self.canvas_window, 750, 300, "images/category_button.png", None)
-    #     category_button.bind('<Button-1>', lambda event: self.render_category())
+        # category_button = Button(self.canvas_window, 750, 300, "images/category_button.png", None)
+        # category_button.bind('<Button-1>', lambda event: self.render_category())
 
-    #     types_button = Button(self.canvas_window, 750, 350, "images/types_button.png", None)
-    #     types_button.bind('<Button-1>', lambda event: self.render_types())
+        # types_button = Button(self.canvas_window, 750, 350, "images/types_button.png", None)
+        # types_button.bind('<Button-1>', lambda event: self.render_types())
 
-    #     orders_button = Button(self.canvas_window, 750, 400, "images/orders_button.png", None)
-    #     orders_button.bind('<Button-1>', lambda event: self.render_orders())
+        # orders_button = Button(self.canvas_window, 750, 400, "images/orders_button.png", None)
+        # orders_button.bind('<Button-1>', lambda event: self.render_orders())
 
-    #     periods_button = Button(self.canvas_window, 750, 450, "images/periods_button.png", None)
-    #     periods_button.bind('<Button-1>', lambda event: self.render_periods())
+        # periods_button = Button(self.canvas_window, 750, 450, "images/periods_button.png", None)
+        # periods_button.bind('<Button-1>', lambda event: self.render_periods())
 
-    #     self.screen_object.get_screen().mainloop()
+        self.screen_object.get_screen().mainloop()
+        self.window_canvas.update()
 
         
 render = RenderBudget()
