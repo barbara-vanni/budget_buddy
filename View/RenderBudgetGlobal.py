@@ -12,6 +12,8 @@ class RenderBudget:
         '''
         Render the global navigation menu of the application
         '''
+        self.tab_object.destroy_all()
+
         background_image = Image(self.tab_object.get_canvas(), 0, 0, './assets/images/bcg_menu_global.png')
         self.tab_object.draw_canvas()
         background_image.draw()
@@ -37,6 +39,8 @@ class RenderBudget:
         each button will redirect to a specific page
         of the RenderTab object
         '''
+        self.tab_object.destroy_all()
+
         self.tab_object.draw_window_canvas()
 
         background_image = Image(self.tab_object.get_window_canvas(), 0, 0, './assets/images/bcg_window.png')
@@ -75,6 +79,8 @@ class RenderBudget:
         each button will redirect to a specific page
         of the RenderTab object
         '''
+        self.tab_object.destroy_all()
+        
         self.tab_object.draw_window_canvas()
 
         background_image = Image(self.tab_object.get_window_canvas(), 0, 0, './assets/images/bcg_window.png')

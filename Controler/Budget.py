@@ -61,17 +61,9 @@ class Budget:
                 total_credit += transaction[3]
             elif transaction[4] == 'debit':
                 total_debit += transaction[3]
+        print(total_credit, total_debit)
         return total_credit, total_debit
-    
-    def overdraft(self, id_user):
-        '''
-        method to calculate the overdraft of the account
-        '''
-        total = self.total_account(id_user)
-        if total < 0:
-            return 'You are in overdraft'
-        else:
-            return 'You are not in overdraft'
+
 
     def read_specific_date(self, id_user, date):
         '''
