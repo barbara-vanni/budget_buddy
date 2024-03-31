@@ -4,7 +4,9 @@ from View.Button import Button
 from View.Screen import Screen
 from Controler.Budget import Budget
 from Model.Transaction import Transaction
+from tkinter import StringVar, OptionMenu
 import tkinter as tk
+import matplotlib.pyplot as plt
 
 custom_entries = []
 buttons = []
@@ -73,83 +75,43 @@ class RenderTab:
         Render the different entries for the credit and debit transactions
         '''
         self.draw_window_canvas()
-        self.destroy_all()
+        self.destroy_entries()
 
-        # Créer les entrées
-        date_entry = CustomEntry(self.window_canvas, "Date", 200, 50)
-        description_entry = CustomEntry(self.window_canvas, "Description", 200, 150)
-        amount_entry = CustomEntry(self.window_canvas, "Amount", 200, 250)
-        category_entry = CustomEntry(self.window_canvas, "Category", 200, 350)
+        date_entry = CustomEntry(self.window_canvas, "Date", 200, 120)
+        description_entry = CustomEntry(self.window_canvas, "Description", 200, 190)
+        amount_entry = CustomEntry(self.window_canvas, "Amount", 200, 260)
+        category_entry = CustomEntry(self.window_canvas, "Category", 200, 320)
 
-        custom_entries.extend([date_entry, description_entry, amount_entry, category_entry])
+        type_options = ["Debit", "Credit"]
+        type_variable = StringVar(self.window_canvas)
+        type_variable.set("Choose your type")
 
-        # Retourner les objets d'entrée
-        return date_entry, description_entry, amount_entry, category_entry
+        types_dropdown = OptionMenu(self.window_canvas, type_variable, *type_options)
+        types_dropdown.config(bg="white", width=18, font=("Arial", 20), relief="flat", fg="black", activebackground="white", activeforeground="black", highlightthickness=0, bd=0, anchor="w")
+        types_dropdown.place(x=200, y=50)
+        return date_entry, description_entry, amount_entry, type_variable, category_entry
 
     def render_credit(self):
         '''
         Render the credit transaction page
         Create a transaction object and send it to the on_send_transaction_button_click method
         '''
-        self.destroy_all()
-        date_entry, description_entry, amount_entry, category_entry = self.render()
+        self.destroy_buttons()
+        date_entry, description_entry, amount_entry, type_variable, category_entry = self.render()
 
-        types = "credit"
-
-        # Fonction pour envoyer la transaction lors de la soumission
         def submit_transaction():
-            '''
-            Create a transaction object and use method from the Budget object to create a budget
-            '''
-            transaction = Transaction(date_entry.get_value(), description_entry.get_value(), amount_entry.get_value(), types, category_entry.get_value(), 1)
-            self.budget.create_budget(transaction)
-            if self.budget.total_account(1) < 0:
-                register_label = tk.Label(self.window_canvas, text="Your Transaction have been register", font=("Helvetica", 22), fg="green")
-                register_label.place(x=200, y=300)
-                overdraft_label = tk.Label(self.window_canvas, text="You're in Overdaft", font=("Helvetica", 22), fg="red")
-                overdraft_label.place(x=200, y=400)
+            if type_variable.get() == "Debit":
+                type_value = "debit"
+            elif type_variable.get() == "Credit":
+                type_value = "credit"
             else:
-                register_label = tk.Label(self.window_canvas, text="Your Transaction have been register", font=("Helvetica", 22), fg="green")
-                register_label.place(x=200, y=300)
-            labels.extend([register_label, overdraft_label])
+                print("Type must be credit or debit")
+                return
+            transaction = Transaction(date_entry.get_value(), description_entry.get_value(), amount_entry.get_value(), type_value, category_entry.get_value(), 1)
+            self.budget.create_budget(transaction)
 
-        # Créer un bouton de soumission
         send_transaction_button = Button(self.window_canvas, 200, 450, './assets/sign_in_button.png', None)
         send_transaction_button.bind('<Button-1>', lambda event: submit_transaction())
-        buttons.append(send_transaction_button)
-
-        self.screen_object.get_screen().mainloop()
-        self.canvas.update()
-
-    def render_debit(self):
-        '''
-        Render the debit transaction page
-        Create a transaction object and send it to the on_send_transaction_button_click method
-        '''
-        self.destroy_all()
-        date_entry, description_entry, amount_entry, category_entry = self.render()
-
-        types = "debit"
-
-        # Fonction pour envoyer la transaction lors de la soumission
-        def submit_transaction(id_name):
-            '''
-            Create a transaction object and use method from the Budget object to create a budget
-            '''
-            transaction = Transaction(date_entry.get_value(), description_entry.get_value(), amount_entry.get_value(), types, category_entry.get_value(), id_name)
-            self.budget.create_budget(transaction)
-            if self.budget.total_account(1) < 0:
-                register_label = tk.Label(self.window_canvas, text="Your Transaction have been register", font=("Helvetica", 22), fg="green")
-                register_label.place(x=200, y=300)
-                overdraft_label = tk.Label(self.window_canvas, text="You're in Overdaft", font=("Helvetica", 22), fg="red")
-                overdraft_label.place(x=200, y=400)
-            else:
-                register_label = tk.Label(self.window_canvas, text="Your Transaction have been register", font=("Helvetica", 22), fg="green")
-                register_label.place(x=200, y=300)
-
-        # Créer un bouton de soumission
-        send_transaction_button = Button(self.window_canvas, 200, 450, './assets/sign_in_button.png', None)
-        send_transaction_button.bind('<Button-1>', lambda event: submit_transaction(1))
         buttons.append(send_transaction_button)
 
         self.screen_object.get_screen().mainloop()
@@ -303,9 +265,22 @@ class RenderTab:
         self.screen_object.get_screen().mainloop()
         self.window_canvas.update()
 
-    def render_graphiques(self):
+    def render_graphic(self):
+        '''
+        Render the graphic page
+        All the transactions are hardcoded
+        '''
         self.destroy_all()
-        pass
+
+        labels = 'Salaire', 'Loyer', 'Courses', 'Loisirs', 'Autres'
+        sizes = self.budget.graphic_budget(1)
+        colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue', 'red']
+        explode = (0.1, 0, 0, 0, 0)
+        plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%', shadow=True, startangle=140)
+        plt.axis('equal')
+        plt.title('Graphique des dépenses')
+        plt.show()
+      
 
     def render_transaction_table(self, transactions):
         '''

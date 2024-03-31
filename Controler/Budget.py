@@ -131,3 +131,32 @@ class Budget:
             transaction_object = Transaction(transaction[1], transaction[2], transaction[3], transaction[4], transaction[5], transaction[6])
             between_dates.append(transaction_object)
         return between_dates
+
+    def graphic_budget(self, id_user):
+        '''
+        method to read a budget by date
+        '''
+        transactions = self.__transaction_repo.read_transaction(conditions=f"id_user = {id_user}")
+        salaire = 0
+        loyer = 0
+        alimentation = 0
+        loisirs = 0
+        autres = 0
+        for transaction in transactions:
+            if transaction[5] == 'salaire':
+                salaire += transaction[3]
+                print('salaire', salaire)
+            elif transaction[5] == 'loyer':
+                loyer += transaction[3]
+                print('loyer', loyer)
+            elif transaction[5] == 'alimentation':
+                alimentation += transaction[3]
+                print('alimentation', alimentation)
+            elif transaction[5] == 'loisirs':   
+                loisirs += transaction[3]
+                print('loisirs', loisirs)
+            elif transaction[5] == 'autres':
+                autres += transaction[3]
+                print('autres', autres)
+            
+        return salaire, loyer, alimentation, loisirs, autres
