@@ -250,21 +250,24 @@ class RenderTab:
         Each transactions are received from on_send_transaction_button_click methods       
         Each transaction will be displayed in a row
         '''
-        self.draw_window_canvas()
+        transparent_window = tk.Toplevel(self.window_canvas)
+
+        table_canvas = tk.Canvas(transparent_window, bg="gray", bd=0, highlightthickness=0)
+        table_canvas.pack(fill=tk.BOTH, expand=True)
 
         # Dessiner un en-tête pour le tableau
         headers = ['Date', 'Description', 'Amount', 'Types', 'Category']
         for i, header in enumerate(headers):
-            header_label = tk.Label(self.window_canvas, text=header, font=("Helvetica", 12), bg="#0045ab", fg="white")
+            header_label = tk.Label(table_canvas, text=header, font=("Helvetica", 18), fg="black")
             header_label.grid(row=0, column=i, padx=5, pady=5)
 
         # Dessiner les données de transaction
         for i, transaction in enumerate(transactions, start=1):
-            tk.Label(self.window_canvas, text=transaction.get_date(), font=("Helvetica", 10)).grid(row=i, column=0, padx=5, pady=5)
-            tk.Label(self.window_canvas, text=transaction.get_description(), font=("Helvetica", 10)).grid(row=i, column=1, padx=5, pady=5)
-            tk.Label(self.window_canvas, text=transaction.get_amount(), font=("Helvetica", 10)).grid(row=i, column=2, padx=5, pady=5)
-            tk.Label(self.window_canvas, text=transaction.get_types(), font=("Helvetica", 10)).grid(row=i, column=3, padx=5, pady=5)
-            tk.Label(self.window_canvas, text=transaction.get_category(), font=("Helvetica", 10)).grid(row=i, column=4, padx=5, pady=5)
+            tk.Label(table_canvas, text=transaction.get_date(), font=("Helvetica", 18)).grid(row=i, column=0, padx=5, pady=5)
+            tk.Label(table_canvas, text=transaction.get_description(), font=("Helvetica", 18)).grid(row=i, column=1, padx=5, pady=5)
+            tk.Label(table_canvas, text=transaction.get_amount(), font=("Helvetica", 18)).grid(row=i, column=2, padx=5, pady=5)
+            tk.Label(table_canvas, text=transaction.get_types(), font=("Helvetica", 18)).grid(row=i, column=3, padx=5, pady=5)
+            tk.Label(table_canvas, text=transaction.get_category(), font=("Helvetica", 18)).grid(row=i, column=4, padx=5, pady=5)
 
         self.screen_object.get_screen().mainloop()
         self.canvas.update()
