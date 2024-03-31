@@ -12,6 +12,8 @@ class RenderBudget:
         '''
         Render the global navigation menu of the application
         '''
+        self.tab_object.destroy_all()
+
         background_image = Image(self.tab_object.get_canvas(), 0, 0, './assets/images/bcg_menu_global.png')
         self.tab_object.draw_canvas()
         background_image.draw()
@@ -37,6 +39,8 @@ class RenderBudget:
         each button will redirect to a specific page
         of the RenderTab object
         '''
+        self.tab_object.destroy_all()
+
         self.tab_object.draw_window_canvas()
 
         background_image = Image(self.tab_object.get_window_canvas(), 0, 0, './assets/images/bcg_window.png')
@@ -48,8 +52,8 @@ class RenderBudget:
         credit_button = Button(self.tab_object.get_window_canvas(), 750, 100, "./assets/images/credit_button.png", None)
         credit_button.bind('<Button-1>', lambda event: self.tab_object.render_credit())
 
-        debit_button = Button(self.tab_object.get_window_canvas(), 760, 160, "./assets/images/debit_button.png", None)
-        debit_button.bind('<Button-1>', lambda event: self.tab_object.render_debit())
+        # debit_button = Button(self.tab_object.get_window_canvas(), 760, 160, "./assets/images/debit_button.png", None)
+        # debit_button.bind('<Button-1>', lambda event: self.tab_object.render_debit())
 
         date_button = Button(self.tab_object.get_window_canvas(), 765, 220, "./assets/images/date_button.png", None)
         date_button.bind('<Button-1>', lambda event: self.tab_object.render_date())
@@ -75,6 +79,8 @@ class RenderBudget:
         each button will redirect to a specific page
         of the RenderTab object
         '''
+        self.tab_object.destroy_all()
+        
         self.tab_object.draw_window_canvas()
 
         background_image = Image(self.tab_object.get_window_canvas(), 0, 0, './assets/images/bcg_window.png')
@@ -87,7 +93,7 @@ class RenderBudget:
         soldes_button.bind('<Button-1>', lambda event: self.tab_object.render_soldes())
 
         graphiques_button = Button(self.tab_object.get_window_canvas(), 770, 350, "./assets/images/graph_button.png", None)
-        graphiques_button.bind('<Button-1>', lambda event: self.tab_object.render_graphiques())
+        graphiques_button.bind('<Button-1>', lambda event: self.tab_object.render_graphic())
 
         self.tab_object.get_screen_object().get_screen().mainloop()
         self.tab_object.get_canvas().update()
