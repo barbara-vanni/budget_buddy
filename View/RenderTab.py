@@ -5,6 +5,7 @@ from View.Screen import Screen
 from Controler.Budget import Budget
 from Model.Transaction import Transaction
 import tkinter as tk
+from tkinter import OptionMenu, StringVar
 
 custom_entries = []
 buttons = []
@@ -56,55 +57,114 @@ class RenderTab:
         '''
         Render the different entries for the credit and debit transactions
         '''
-
         self.draw_window_canvas()
         self.destroy_entries()
 
-        date_entry = CustomEntry(self.window_canvas, "Date", 200, 50)
+        # Créer les entrées
+        date_entry = CustomEntry(self.window_canvas, "Date", 200, 100)
         description_entry = CustomEntry(self.window_canvas, "Description", 200, 150)
         amount_entry = CustomEntry(self.window_canvas, "Amount", 200, 250)
         category_entry = CustomEntry(self.window_canvas, "Category", 200, 350)
-        
-        custom_entries.extend([date_entry, description_entry, amount_entry, category_entry])
-        return date_entry, description_entry, amount_entry, category_entry
-    
+
+        # Créer le menu déroulant pour choisir le type
+        type_options = ["Debit", "Credit"]
+        type_variable = StringVar(self.window_canvas)
+        type_variable.set("Choose your type")
+        types_dropdown = OptionMenu(self.window_canvas, type_variable, *type_options)
+        types_dropdown.place(x=200, y=50)
+
+
+        # Retourner les objets d'entrée
+        return date_entry, description_entry, amount_entry, type_variable, category_entry
+
     def render_credit(self):
         '''
         Render the credit transaction page
         Create a transaction object and send it to the on_send_transaction_button_click method
         '''
-
         self.destroy_buttons()
-        date_entry, description_entry, amount_entry, category_entry = self.render()
+        date_entry, description_entry, amount_entry, type_variable, category_entry = self.render()
 
-        types = "credit"
-        
-        transaction = Transaction(date_entry, description_entry, amount_entry, types, category_entry, 1)
+        # Fonction pour envoyer la transaction lors de la soumission
+        def submit_transaction():
+            if type_variable.get() == "Debit":
+                type_value = "debit"
+            elif type_variable.get() == "Credit":
+                type_value = "credit"
+            else:
+                # Si aucun type n'est sélectionné, afficher une erreur
+                print("Type must be credit or debit")
+                return
+            transaction = Transaction(date_entry.get_value(), description_entry.get_value(), amount_entry.get_value(), type_value, category_entry.get_value(), 1)
+            self.budget.create_budget(transaction)
 
+        # Créer un bouton de soumission
         send_transaction_button = Button(self.window_canvas, 200, 450, './assets/sign_in_button.png', None)
-        send_transaction_button.bind('<Button-1>', lambda event: self.budget.create_budget(transaction))
-
+        send_transaction_button.bind('<Button-1>', lambda event: submit_transaction())
         buttons.append(send_transaction_button)
 
         self.screen_object.get_screen().mainloop()
         self.canvas.update()
-    
+
+    # def render(self):
+    #     '''
+    #     Render the different entries for the credit and debit transactions
+    #     '''
+    #     self.draw_window_canvas()
+    #     self.destroy_entries()
+
+    #     # Créer les entrées
+    #     date_entry = CustomEntry(self.window_canvas, "Date", 200, 50)
+    #     description_entry = CustomEntry(self.window_canvas, "Description", 200, 150)
+    #     amount_entry = CustomEntry(self.window_canvas, "Amount", 200, 250)
+    #     types_entry = CustomEntry(self.window_canvas, "Choose your type", 200, 100)
+    #     category_entry = CustomEntry(self.window_canvas, "Category", 200, 350)
+
+
+    #     # Retourner les objets d'entrée
+    #     return date_entry, description_entry, amount_entry, types_entry, category_entry, types_entry
+
+    # def render_credit(self):
+    #     '''
+    #     Render the credit transaction page
+    #     Create a transaction object and send it to the on_send_transaction_button_click method
+    #     '''
+    #     self.destroy_buttons()
+    #     types_entry, date_entry, description_entry, amount_entry, types_entry, category_entry = self.render()
+
+    #     # types = "credit"
+
+    #     # Fonction pour envoyer la transaction lors de la soumission
+    #     def submit_transaction():
+    #         transaction = Transaction(date_entry.get_value(), description_entry.get_value(), amount_entry.get_value(), types_entry.get_value(), category_entry.get_value(), 1)
+    #         self.budget.create_budget(transaction)
+
+    #     # Créer un bouton de soumission
+    #     send_transaction_button = Button(self.window_canvas, 200, 450, './assets/sign_in_button.png', None)
+    #     send_transaction_button.bind('<Button-1>', lambda event: submit_transaction())
+    #     buttons.append(send_transaction_button)
+
+    #     self.screen_object.get_screen().mainloop()
+    #     self.canvas.update()
+
     def render_debit(self):
         '''
         Render the debit transaction page
         Create a transaction object and send it to the on_send_transaction_button_click method
         '''
-
         self.destroy_buttons()
         date_entry, description_entry, amount_entry, category_entry = self.render()
 
         types = "debit"
 
-        transaction = Transaction(date_entry, description_entry, amount_entry, types, category_entry, 1)
+        # Fonction pour envoyer la transaction lors de la soumission
+        def submit_transaction():
+            transaction = Transaction(date_entry.get_value(), description_entry.get_value(), amount_entry.get_value(), types, category_entry.get_value(), 1)
+            self.budget.create_budget(transaction)
 
+        # Créer un bouton de soumission
         send_transaction_button = Button(self.window_canvas, 200, 450, './assets/sign_in_button.png', None)
-        send_transaction_button.bind('<Button-1>', lambda event: self.budget.create_budget(transaction))
-
+        send_transaction_button.bind('<Button-1>', lambda event: submit_transaction())
         buttons.append(send_transaction_button)
 
         self.screen_object.get_screen().mainloop()
