@@ -80,30 +80,25 @@ class RenderTab:
         date_entry = CustomEntry(self.window_canvas, "Date", 200, 120)
         description_entry = CustomEntry(self.window_canvas, "Description", 200, 190)
         amount_entry = CustomEntry(self.window_canvas, "Amount", 200, 260)
-        category_entry = CustomEntry(self.window_canvas, "Category", 200, 320)
+        # category_entry = CustomEntry(self.window_canvas, "Category", 200, 320)
 
+        # Create a dropdown menu for the type of transaction
         type_options = ["Debit", "Credit"]
         type_variable = StringVar(self.window_canvas)
         type_variable.set("Choose your type")
-
         types_dropdown = OptionMenu(self.window_canvas, type_variable, *type_options)
         types_dropdown.config(bg="white", width=18, font=("Arial", 20), relief="flat", fg="black", activebackground="white", activeforeground="black", highlightthickness=0, bd=0, anchor="w")
         types_dropdown.place(x=200, y=50)
-        return date_entry, description_entry, amount_entry, type_variable, category_entry
 
-        date_entry = CustomEntry(self.window_canvas, "Date", 200, 120)
-        description_entry = CustomEntry(self.window_canvas, "Description", 200, 190)
-        amount_entry = CustomEntry(self.window_canvas, "Amount", 200, 260)
-        category_entry = CustomEntry(self.window_canvas, "Category", 200, 320)
+        #Create a dropdown menu for the category of the transaction
+        category_options = ["Salaire", "Loyer", "Alimentation", "Loisirs", "Autres"]
+        category_variable = StringVar(self.window_canvas)
+        category_variable.set("Choose your category")
+        category_dropdown = OptionMenu(self.window_canvas, category_variable, *category_options)
+        category_dropdown.config(bg="white", width=18, font=("Arial", 20), relief="flat", fg="black", activebackground="white", activeforeground="black", highlightthickness=0, bd=0, anchor="w")
+        category_dropdown.place(x=200, y=320)
+        return date_entry, description_entry, amount_entry, type_variable, category_variable
 
-        type_options = ["Debit", "Credit"]
-        type_variable = StringVar(self.window_canvas)
-        type_variable.set("Choose your type")
-
-        types_dropdown = OptionMenu(self.window_canvas, type_variable, *type_options)
-        types_dropdown.config(bg="white", width=18, font=("Arial", 20), relief="flat", fg="black", activebackground="white", activeforeground="black", highlightthickness=0, bd=0, anchor="w")
-        types_dropdown.place(x=200, y=50)
-        return date_entry, description_entry, amount_entry, type_variable, category_entry
 
     def render_credit(self):
         '''
@@ -111,8 +106,7 @@ class RenderTab:
         Create a transaction object and send it to the on_send_transaction_button_click method
         '''
         self.destroy_buttons()
-        date_entry, description_entry, amount_entry, type_variable, category_entry = self.render()
-        date_entry, description_entry, amount_entry, type_variable, category_entry = self.render()
+        date_entry, description_entry, amount_entry, type_variable, category_variable = self.render()
 
         def submit_transaction():
             if type_variable.get() == "Debit":
@@ -122,17 +116,22 @@ class RenderTab:
             else:
                 print("Type must be credit or debit")
                 return
-            transaction = Transaction(date_entry.get_value(), description_entry.get_value(), amount_entry.get_value(), type_value, category_entry.get_value(), 1)
-            self.budget.create_budget(transaction)
-        def submit_transaction():
-            if type_variable.get() == "Debit":
-                type_value = "debit"
-            elif type_variable.get() == "Credit":
-                type_value = "credit"
+
+            if category_variable.get() == "Salaire":
+                category_value = "salaire"
+            elif category_variable.get() == "Loyer":
+                category_value = "loyer"
+            elif category_variable.get() == "Alimentation":
+                category_value = "alimentation"
+            elif category_variable.get() == "Loisirs":
+                category_value = "loisirs"
+            elif category_variable.get() == "Autres":
+                category_value = "autres"
             else:
-                print("Type must be credit or debit")
+                print("Category must be salaire, loyer, alimentation, loisirs or autres")
                 return
-            transaction = Transaction(date_entry.get_value(), description_entry.get_value(), amount_entry.get_value(), type_value, category_entry.get_value(), 1)
+
+            transaction = Transaction(date_entry.get_value(), description_entry.get_value(), amount_entry.get_value(), type_value, category_value, 1)
             self.budget.create_budget(transaction)
 
         send_transaction_button = Button(self.window_canvas, 200, 450, './assets/sign_in_button.png', None)
