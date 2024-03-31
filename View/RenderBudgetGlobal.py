@@ -1,4 +1,4 @@
-from View.RenderTab import RenderTab
+from View.RenderTab import *
 from View.Image import Image
 from View.Button import Button
 from View.Screen import Screen
@@ -52,9 +52,6 @@ class RenderBudget:
         credit_button = Button(self.tab_object.get_window_canvas(), 750, 100, "./assets/images/credit_button.png", None)
         credit_button.bind('<Button-1>', lambda event: self.tab_object.render_credit())
 
-        # debit_button = Button(self.tab_object.get_window_canvas(), 760, 160, "./assets/images/debit_button.png", None)
-        # debit_button.bind('<Button-1>', lambda event: self.tab_object.render_debit())
-
         date_button = Button(self.tab_object.get_window_canvas(), 765, 220, "./assets/images/date_button.png", None)
         date_button.bind('<Button-1>', lambda event: self.tab_object.render_date())
 
@@ -69,6 +66,8 @@ class RenderBudget:
 
         periods_button = Button(self.tab_object.get_window_canvas(), 720, 460, "./assets/images/date_sort_button.png", None)
         periods_button.bind('<Button-1>', lambda event: self.tab_object.render_periods())
+
+        labels.append(transaction_label)
 
         self.tab_object.get_screen_object().get_screen().mainloop()
         self.tab_object.get_canvas().update()
@@ -94,6 +93,8 @@ class RenderBudget:
 
         graphiques_button = Button(self.tab_object.get_window_canvas(), 770, 350, "./assets/images/graph_button.png", None)
         graphiques_button.bind('<Button-1>', lambda event: self.tab_object.render_graphic())
+
+        labels.append(budget_label)
 
         self.tab_object.get_screen_object().get_screen().mainloop()
         self.tab_object.get_canvas().update()
