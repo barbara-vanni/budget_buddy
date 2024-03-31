@@ -47,6 +47,10 @@ class RenderBudget:
     def render_transaction(self):
         self.draw_window_canvas()
 
+        background_image = Image(self.window_canvas, 0, 0, './assets/images/bcg_window.png')
+        background_image.draw()
+        
+
         transaction_label = tk.Label(self.window_canvas, text="Transaction", font=("Helvetica", 16), bg="white")
         transaction_label.place(x=770, y=0)
 
