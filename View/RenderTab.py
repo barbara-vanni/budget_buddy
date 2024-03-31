@@ -56,55 +56,59 @@ class RenderTab:
         '''
         Render the different entries for the credit and debit transactions
         '''
-
         self.draw_window_canvas()
         self.destroy_entries()
 
+        # Créer les entrées
         date_entry = CustomEntry(self.window_canvas, "Date", 200, 50)
         description_entry = CustomEntry(self.window_canvas, "Description", 200, 150)
         amount_entry = CustomEntry(self.window_canvas, "Amount", 200, 250)
         category_entry = CustomEntry(self.window_canvas, "Category", 200, 350)
-        
-        custom_entries.extend([date_entry, description_entry, amount_entry, category_entry])
+
+        # Retourner les objets d'entrée
         return date_entry, description_entry, amount_entry, category_entry
-    
+
     def render_credit(self):
         '''
         Render the credit transaction page
         Create a transaction object and send it to the on_send_transaction_button_click method
         '''
-
         self.destroy_buttons()
         date_entry, description_entry, amount_entry, category_entry = self.render()
 
         types = "credit"
-        
-        transaction = Transaction(date_entry, description_entry, amount_entry, types, category_entry, 1)
 
+        # Fonction pour envoyer la transaction lors de la soumission
+        def submit_transaction():
+            transaction = Transaction(date_entry.get_value(), description_entry.get_value(), amount_entry.get_value(), types, category_entry.get_value(), 1)
+            self.budget.create_budget(transaction)
+
+        # Créer un bouton de soumission
         send_transaction_button = Button(self.window_canvas, 200, 450, './assets/sign_in_button.png', None)
-        send_transaction_button.bind('<Button-1>', lambda event: self.budget.create_budget(transaction))
-
+        send_transaction_button.bind('<Button-1>', lambda event: submit_transaction())
         buttons.append(send_transaction_button)
 
         self.screen_object.get_screen().mainloop()
         self.canvas.update()
-    
+
     def render_debit(self):
         '''
         Render the debit transaction page
         Create a transaction object and send it to the on_send_transaction_button_click method
         '''
-
         self.destroy_buttons()
         date_entry, description_entry, amount_entry, category_entry = self.render()
 
         types = "debit"
 
-        transaction = Transaction(date_entry, description_entry, amount_entry, types, category_entry, 1)
+        # Fonction pour envoyer la transaction lors de la soumission
+        def submit_transaction(id_name):
+            transaction = Transaction(date_entry.get_value(), description_entry.get_value(), amount_entry.get_value(), types, category_entry.get_value(), id_name)
+            self.budget.create_budget(transaction)
 
+        # Créer un bouton de soumission
         send_transaction_button = Button(self.window_canvas, 200, 450, './assets/sign_in_button.png', None)
-        send_transaction_button.bind('<Button-1>', lambda event: self.budget.create_budget(transaction))
-
+        send_transaction_button.bind('<Button-1>', lambda event: submit_transaction(1))
         buttons.append(send_transaction_button)
 
         self.screen_object.get_screen().mainloop()
@@ -115,22 +119,23 @@ class RenderTab:
         Render the date page
         send entries to the on_send_transaction_button_click method
         '''
-
         self.destroy_buttons()
         self.destroy_entries()
 
         date_entry = CustomEntry(self.window_canvas, "Date", 50, 50)
 
+        def date_validation(id_name):
+            transactions = self.budget.read_specific_date(id_name, date_entry.get_value())
+            self.render_transaction_table(transactions)
+
         valider = Button(self.window_canvas, 600, 45, './assets/images/validate.png', None)
-        valider.bind('<Button-1>', lambda event: self.on_send_transaction_button_click(1, date_entry))
+        valider.bind('<Button-1>', lambda event: date_validation(1))
 
         custom_entries.append(date_entry)
         buttons.append(valider)
 
         self.screen_object.get_screen().mainloop()
         self.canvas.update()
-
-        return True
     
     def render_category(self):
         '''
@@ -143,16 +148,18 @@ class RenderTab:
 
         category_entry = CustomEntry(self.window_canvas, "Category", 50, 50)
 
+        def category_validation(id_name):
+            transactions = self.budget.read_specific_category(category_entry.get_value(), id_name)
+            self.render_transaction_table(transactions)
+
         valider = Button(self.window_canvas, 600, 45, './assets/images/validate.png', None)
-        valider.bind('<Button-1>', lambda event: self.on_send_transaction_button_click(1, category_entry))
+        valider.bind('<Button-1>', lambda event: category_validation(1))
 
         custom_entries.append(category_entry)
         buttons.append(valider)
 
         self.screen_object.get_screen().mainloop()
         self.canvas.update()
-
-        return True
 
     def render_types(self):
         '''
@@ -162,18 +169,21 @@ class RenderTab:
 
         self.destroy_buttons()
         self.destroy_entries()
+
         types_entry = CustomEntry(self.window_canvas, "Type", 50, 50)
 
+        def types_validation(id_name):
+            transactions = self.budget.read_specific_type(types_entry.get_value(), id_name)
+            self.render_transaction_table(transactions)
+
         send_transaction_button = Button(self.window_canvas, 600, 45, './assets/images/validate.png', None)
-        send_transaction_button.bind('<Button-1>', lambda event: self.on_send_transaction_button_click(1, types_entry))
+        send_transaction_button.bind('<Button-1>', lambda event: types_validation(1))
 
         custom_entries.append(types_entry)
         buttons.append(send_transaction_button)
 
         self.screen_object.get_screen().mainloop()
         self.canvas.update()
-
-        return True
     
     def render_orders(self):
         '''
@@ -184,18 +194,24 @@ class RenderTab:
         self.destroy_buttons()
         self.destroy_entries()
 
+        def order_validation(id_user, order):
+            if order == "assend":
+                transactions = self.budget.read_by_ascending_money(id_user)
+                self.render_transaction_table(transactions)
+            elif order == "descend":
+                transactions = self.budget.read_by_descending_money(id_user)
+                self.render_transaction_table(transactions)
+
         assend_button = Button(self.window_canvas, 50, 50, './assets/images/validate.png', None)
-        assend_button.bind('<Button-1>', lambda event: self.on_send_transaction_button_click(1, "assend"))
+        assend_button.bind('<Button-1>', lambda event: order_validation(1, "assend"))
 
         descend_button = Button(self.window_canvas, 350, 50, './assets/images/validate.png', None)
-        descend_button.bind('<Button-1>', lambda event: self.on_send_transaction_button_click(1, "descend"))
+        descend_button.bind('<Button-1>', lambda event: order_validation(1, "descend"))
 
         buttons.extend([assend_button, descend_button])
 
         self.screen_object.get_screen().mainloop()
         self.canvas.update()
-
-        return True
 
     def render_periods(self):
         '''
@@ -209,16 +225,18 @@ class RenderTab:
         from_date_entry = CustomEntry(self.window_canvas, "From", 50, 50)
         to_date_entry = CustomEntry(self.window_canvas, "To", 50, 250)
 
+        def date_to_date_validation(id_name):
+            transactions = self.budget.read_between_dates(id_name, from_date_entry.get_value(), to_date_entry.get_value())
+            self.render_transaction_table(transactions)
+
         valider = Button(self.window_canvas, 400, 50, './assets/images/validate.png', None)
-        valider.bind('<Button-1>', lambda event: self.on_send_transaction_button_click(1, from_date_entry, to_date_entry))
+        valider.bind('<Button-1>', lambda event: date_to_date_validation(1))
 
         custom_entries.extend([from_date_entry, to_date_entry])
         buttons.append(valider)
 
         self.screen_object.get_screen().mainloop()
-        self.canvas.update()
-
-        return True
+        self.window_canvas.update()
     
     def render_soldes(self):
         pass
@@ -232,48 +250,21 @@ class RenderTab:
         Each transactions are received from on_send_transaction_button_click methods       
         Each transaction will be displayed in a row
         '''
-
-        self.tab_object.draw_window_canvas()
+        self.draw_window_canvas()
 
         # Dessiner un en-tête pour le tableau
         headers = ['Date', 'Description', 'Amount', 'Types', 'Category']
         for i, header in enumerate(headers):
-            header_label = tk.Label(self.tab_object.get_window_canvas(), text=header, font=("Helvetica", 12), bg="#0045ab", fg="white")
+            header_label = tk.Label(self.window_canvas, text=header, font=("Helvetica", 12), bg="#0045ab", fg="white")
             header_label.grid(row=0, column=i, padx=5, pady=5)
 
         # Dessiner les données de transaction
         for i, transaction in enumerate(transactions, start=1):
-            tk.Label(self.tab_object.get_window_canvas(), text=transaction.date, font=("Helvetica", 10)).grid(row=i, column=0, padx=5, pady=5)
-            tk.Label(self.tab_object.get_window_canvas(), text=transaction.description, font=("Helvetica", 10)).grid(row=i, column=1, padx=5, pady=5)
-            tk.Label(self.tab_object.get_window_canvas(), text=transaction.amount, font=("Helvetica", 10)).grid(row=i, column=2, padx=5, pady=5)
-            tk.Label(self.tab_object.get_window_canvas(), text=transaction.types, font=("Helvetica", 10)).grid(row=i, column=3, padx=5, pady=5)
-            tk.Label(self.tab_object.get_window_canvas(), text=transaction.category, font=("Helvetica", 10)).grid(row=i, column=4, padx=5, pady=5)
+            tk.Label(self.window_canvas, text=transaction.get_date(), font=("Helvetica", 10)).grid(row=i, column=0, padx=5, pady=5)
+            tk.Label(self.window_canvas, text=transaction.get_description(), font=("Helvetica", 10)).grid(row=i, column=1, padx=5, pady=5)
+            tk.Label(self.window_canvas, text=transaction.get_amount(), font=("Helvetica", 10)).grid(row=i, column=2, padx=5, pady=5)
+            tk.Label(self.window_canvas, text=transaction.get_types(), font=("Helvetica", 10)).grid(row=i, column=3, padx=5, pady=5)
+            tk.Label(self.window_canvas, text=transaction.get_category(), font=("Helvetica", 10)).grid(row=i, column=4, padx=5, pady=5)
 
-        self.tab_object.get_screen_object().get_screen().mainloop()
-        self.tab_object.get_canvas().update()
-
-    def on_send_transaction_button_click(self, id_name, args_1, args_2 = None):
-        '''
-        Receive args from the render methods
-        and send them to the appropriate method
-        and render the transaction table with render_transaction_table method
-        '''
-        
-        if self.render_date():
-            transactions = self.budget.read_specific_date(id_name, args_1)
-            self.render_transaction_table(transactions)
-        elif self.render_category():
-            transactions = self.budget.read_specific_category(id_name, args_1)
-            self.render_transaction_table(transactions)
-        elif self.render_types():
-            transactions = self.budget.read_specific_type(id_name, args_1)
-            self.render_transaction_table(transactions)
-        elif self.render_orders():
-            if args_1 == "assend":
-                transactions = self.budget.read_by_ascending_money(id_name)
-            elif args_1 == "descend":
-                transactions = self.budget.read_by_descending_money(id_name)
-            self.render_transaction_table(transactions)
-        elif self.render_periods():
-            transactions = self.budget.read_between_dates(id_name, args_1, args_2)
-            self.render_transaction_table(transactions)
+        self.screen_object.get_screen().mainloop()
+        self.canvas.update()
