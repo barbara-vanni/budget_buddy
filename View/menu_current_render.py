@@ -1,8 +1,9 @@
-# from View.RenderAuthentication import auth
-from View.RenderBudgetGlobal import render
+'''
+This file is used to store the current state of the menu. It is used to determine which menu is currently being displayed.
+'''
 
-state = render.render_global_menu
-# state = auth.render_main_menu
+
+state = False
 
 def get_state():
     return state
@@ -10,4 +11,3 @@ def get_state():
 def set_state(new_state):
     global state
     state = new_state
-

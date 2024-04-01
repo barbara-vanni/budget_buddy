@@ -5,8 +5,19 @@ from View.Screen import Screen
 import tkinter as tk
 
 class RenderBudget:
-    def __init__(self, user_id):
-        self.tab_object = RenderTab(user_id)
+    def __init__(self, user_id, user_name):
+        self.screen_object = Screen()
+        self.tab_object = RenderTab(self.screen_object, user_id)
+        self.canvas = self.screen_object.get_canvas()
+        self.user_name = user_name
+
+
+    def get_screen_object(self):
+        return self.screen_object
+
+    def draw_canvas(self):
+        self.canvas.pack()
+
 
     def render_global_menu(self):
         '''
@@ -27,7 +38,7 @@ class RenderBudget:
         deconnexion_button = Button(self.tab_object.get_canvas(), 800, 11, "./assets/images/deco_button.png", None)
         deconnexion_button.bind('<Button-1>', lambda event: self.render_deconnexion())
 
-        welcome_label = tk.Label(self.tab_object.get_canvas(), text="Welcome", font=("Helvetica", 16), bg="#0045ab", fg="white")
+        welcome_label = tk.Label(self.tab_object.get_canvas(), text=f"Welcome {self.user_name}", font=("Helvetica", 16), bg="#0045ab", fg="white")
         welcome_label.place(x=10, y=20)
 
         self.tab_object.get_screen_object().get_screen().mainloop()
@@ -85,7 +96,7 @@ class RenderBudget:
         background_image = Image(self.tab_object.get_window_canvas(), 0, 0, './assets/images/bcg_window.png')
         background_image.draw()
 
-        budget_label = tk.Label(self.tab_object.get_window_canvas(), text="Budget", font=("Helvetica", 20), bg="#0045ab", fg="white")
+        budget_label = tk.Label(self.tab_object.get_window_canvas(), text=f"Welcome {self.user_name}", font=("Helvetica", 20), bg="#0045ab", fg="white")
         budget_label.place(x=760, y=40)
 
         soldes_button = Button(self.tab_object.get_window_canvas(), 725, 160, "./assets/images/balance_button.png", None)
@@ -101,7 +112,7 @@ class RenderBudget:
         self.tab_object.get_screen_object().get_screen().mainloop()
         self.tab_object.get_canvas().update()
 
-render = RenderBudget(1)
+
 
 
 
