@@ -1,5 +1,10 @@
 import tkinter as tk
 
+'''
+This class is used to create the screen of the application
+We need it twice in the application, one for the authentication and one for the main menu
+'''
+
 class Screen():
     def __init__(self):
         self.__screen = tk.Tk()

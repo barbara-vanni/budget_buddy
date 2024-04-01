@@ -3,10 +3,10 @@ from View.RenderAuthentication import RenderAuthentication
 
 auth = RenderAuthentication()
 set_state(auth.render_main_menu)
+
 try : 
     running = True
     
-
     while running :
         get_state()()
     

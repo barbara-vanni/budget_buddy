@@ -1,3 +1,7 @@
+'''
+This file is used to store the current state of the menu. It is used to determine which menu is currently being displayed.
+'''
+
 
 state = False
 
