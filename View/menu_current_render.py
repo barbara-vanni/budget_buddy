@@ -1,8 +1,5 @@
-from View.RenderAuthentication import auth
 
-
-
-state = auth.render_main_menu
+state = False
 
 def get_state():
     return state
@@ -10,4 +7,3 @@ def get_state():
 def set_state(new_state):
     global state
     state = new_state
-
