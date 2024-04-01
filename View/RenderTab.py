@@ -96,6 +96,9 @@ class RenderTab:
         self.draw_window_canvas()
         self.destroy_entries()
 
+        transaction_label = tk.Label(self.window_canvas, text="Transaction", font=("Helvetica", 20), bg="#0045ab", fg="white")
+        transaction_label.place(x=730, y=40)
+
         date_entry = CustomEntry(self.window_canvas, "Date (YYYY-MM-DD)", 200, 120)
         description_entry = CustomEntry(self.window_canvas, "Description", 200, 210)
         amount_entry = CustomEntry(self.window_canvas, "Amount", 200, 300)
@@ -118,6 +121,7 @@ class RenderTab:
 
         custom_entries.extend([date_entry, description_entry, amount_entry])
         dropdowns.extend([types_dropdown, category_dropdown])
+        labels.append(transaction_label)
 
         return date_entry, description_entry, amount_entry, type_variable, category_variable
 
@@ -175,6 +179,9 @@ class RenderTab:
 
         date_entry = CustomEntry(self.window_canvas, "Date (YYYY-MM-DD)", 200, 270)
 
+        transaction_label = tk.Label(self.window_canvas, text="Transaction", font=("Helvetica", 20), bg="#0045ab", fg="white")
+        transaction_label.place(x=730, y=40)
+
         def date_validation(id_name):
             transactions = self.budget.read_specific_date(id_name, date_entry.get_value())
             self.render_transaction_table(transactions)
@@ -184,6 +191,7 @@ class RenderTab:
 
         custom_entries.append(date_entry)
         buttons.append(valider)
+        labels.append(transaction_label)
 
         self.screen_object.get_screen().mainloop()
         self.canvas.update()
@@ -195,6 +203,9 @@ class RenderTab:
         '''
 
         self.destroy_all()
+
+        transaction_label = tk.Label(self.window_canvas, text="Transaction", font=("Helvetica", 20), bg="#0045ab", fg="white")
+        transaction_label.place(x=730, y=40)
 
         #Create a dropdown menu for the category of the transaction
         category_options = ["Salaire", "Loyer", "Alimentation", "Loisirs", "Autres"]
@@ -223,6 +234,7 @@ class RenderTab:
 
         buttons.append(valider)
         dropdowns.append(category_dropdown)
+        labels.append(transaction_label)
 
         self.screen_object.get_screen().mainloop()
         self.canvas.update()
@@ -234,6 +246,9 @@ class RenderTab:
         '''
 
         self.destroy_all()
+
+        transaction_label = tk.Label(self.window_canvas, text="Transaction", font=("Helvetica", 20), bg="#0045ab", fg="white")
+        transaction_label.place(x=730, y=40)
 
         # Create a dropdown menu for the type of transaction
         type_options = ["Debit", "Credit"]
@@ -256,6 +271,7 @@ class RenderTab:
 
         buttons.append(send_transaction_button)
         dropdowns.append(types_dropdown)
+        labels.append(transaction_label)
 
         self.screen_object.get_screen().mainloop()
         self.canvas.update()
@@ -267,6 +283,9 @@ class RenderTab:
         '''
 
         self.destroy_all()
+
+        transaction_label = tk.Label(self.window_canvas, text="Transaction", font=("Helvetica", 20), bg="#0045ab", fg="white")
+        transaction_label.place(x=730, y=40)
 
         def order_validation(id_user, order):
             if order == "assend":
@@ -286,6 +305,7 @@ class RenderTab:
 
         images.extend([assend_image, descend_image])
         buttons.extend([assend_button, descend_button])
+        labels.append(transaction_label)
 
         self.screen_object.get_screen().mainloop()
         self.canvas.update()
@@ -297,6 +317,9 @@ class RenderTab:
         '''
 
         self.destroy_all()
+
+        transaction_label = tk.Label(self.window_canvas, text="Transaction", font=("Helvetica", 20), bg="#0045ab", fg="white")
+        transaction_label.place(x=730, y=40)
 
         from_date_entry = CustomEntry(self.window_canvas, "From (YYYY-MM-DD)", 200, 230)
         to_date_entry = CustomEntry(self.window_canvas, "To (YYYY-MM-DD)", 200, 300)
@@ -310,6 +333,7 @@ class RenderTab:
 
         custom_entries.extend([from_date_entry, to_date_entry])
         buttons.append(valider)
+        labels.append(transaction_label)
 
         self.screen_object.get_screen().mainloop()
         self.window_canvas.update()
@@ -321,6 +345,9 @@ class RenderTab:
         self.destroy_all()
 
         total_credit, total_debit = self.budget.debit_credit(self.user_id)
+
+        budget_label = tk.Label(self.window_canvas, text="Budget", font=("Helvetica", 20), bg="#0045ab", fg="white")
+        budget_label.place(x=760, y=40)
 
         total_credit_label = tk.Label(self.window_canvas, text="Total Credit: " + str(total_credit), font=("Helvetica", 22), fg="white", bg="#0045ab")
         total_credit_label.place(x=200, y=210)
@@ -334,11 +361,11 @@ class RenderTab:
             overdraft_label = tk.Label(self.window_canvas, text="You're in Overdaft", font=("Helvetica", 22), fg="#0045ab", bg="red")
             total_label.place(x=200, y=420)
             overdraft_label.place(x=200, y=470)
-            labels.extend([total_credit_label, total_debit_label, total_label, overdraft_label])
+            labels.extend([budget_label, total_credit_label, total_debit_label, total_label, overdraft_label])
         else:
             total_label = tk.Label(self.window_canvas, text="Total: " + str(total), font=("Helvetica", 22), fg="yellow", bg="#0045ab")
             total_label.place(x=200, y=420)
-            labels.extend([total_credit_label, total_debit_label, total_label])
+            labels.extend([budget_label, total_credit_label, total_debit_label, total_label])
 
         self.screen_object.get_screen().mainloop()
         self.window_canvas.update()
@@ -350,6 +377,9 @@ class RenderTab:
         '''
         self.destroy_all()
 
+        budget_label = tk.Label(self.window_canvas, text="Budget", font=("Helvetica", 20), bg="#0045ab", fg="white")
+        budget_label.place(x=760, y=40)
+
         labels = 'Salaire', 'Loyer', 'Courses', 'Loisirs', 'Autres'
         sizes = self.budget.graphic_budget(self.user_id)
         colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue', 'red']
@@ -358,8 +388,9 @@ class RenderTab:
         plt.axis('equal')
         plt.title('Graphique des dépenses')
         plt.show()
-      
 
+        labels.append(budget_label)
+      
     def render_transaction_table(self, transactions):
         '''
         Render the transaction table

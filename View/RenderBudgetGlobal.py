@@ -96,8 +96,7 @@ class RenderBudget:
 
         deco_button_budget = Button(self.tab_object.get_window_canvas(), 725, 340, "./assets/images/deco_button_budget.png", None)
 
-
-        labels.append(budget_label)
+        labels.extend([budget_label])
 
         self.tab_object.get_screen_object().get_screen().mainloop()
         self.tab_object.get_canvas().update()
