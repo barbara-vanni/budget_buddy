@@ -1,8 +1,9 @@
 import tkinter as tk
 
 class Screen():
-    def __init__(self) -> None:
+    def __init__(self):
         self.__screen = tk.Tk()
+        self.__screen.geometry("900x600")
         self.__width = 900
         self.__height = 600
         self.__canvas = tk.Canvas(self.__screen, width=self.__width, height=self.__height)
@@ -20,3 +21,6 @@ class Screen():
     def draw_window_canvas(self):
         self.__window_canvas = tk.Canvas(self.__screen, width = self.__width, height = self.__height - 100)
         self.__window_canvas.pack()
+
+    def destroy_canvas(self):
+        self.__canvas.destroy()

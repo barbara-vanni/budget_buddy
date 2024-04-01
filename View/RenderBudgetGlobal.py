@@ -4,12 +4,13 @@ from View.Button import Button
 from View.Screen import Screen
 import tkinter as tk
 
-custom_entries = []
+
 
 class RenderBudget:
-    def __init__(self, screen):
-        self.screen_object = screen
+    def __init__(self):
+        self.screen_object = Screen()
         self.canvas = self.screen_object.get_canvas()
+        # self.custom_entries = custom_entries
         # self.window_canvas = self.screen_object.get_window_canvas()
 
     def get_screen_object(self):
@@ -18,13 +19,9 @@ class RenderBudget:
     def draw_canvas(self):
         self.canvas.pack()
 
-    # def draw_canvas_window(self):
-    #     self.screen_object.get_window_canvas().pack()
 
     def render_global_menu(self):
 
-        for entry in custom_entries:
-            entry.destroy_entry()
         
         background_image = Image(self.canvas, 0, 0, './assets/images/bcg_menu_global.png')
         self.draw_canvas()
