@@ -85,11 +85,11 @@ class RenderAuthentication:
     def check_authenticate(self, entry5, entry6):
         email = entry5
         password = entry6
-        if self.authentication.authenticate(email, password):
-            print("Connected")
+        user_id, user_name, test_connection = self.authentication.authenticate(email, password)
+        if test_connection == "right":
             if self.screen_object.get_screen().winfo_exists():
                 self.screen_object.get_screen().destroy()
-            budget_menu = RenderBudget(1)
+            budget_menu = RenderBudget(user_id, user_name)
             set_state(budget_menu.render_global_menu())
         else:
             print("Wrong mail or password")
