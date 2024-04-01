@@ -80,7 +80,6 @@ class RenderTab:
         date_entry = CustomEntry(self.window_canvas, "Date", 200, 120)
         description_entry = CustomEntry(self.window_canvas, "Description", 200, 190)
         amount_entry = CustomEntry(self.window_canvas, "Amount", 200, 260)
-        # category_entry = CustomEntry(self.window_canvas, "Category", 200, 320)
 
         # Create a dropdown menu for the type of transaction
         type_options = ["Debit", "Credit"]
@@ -100,7 +99,7 @@ class RenderTab:
         return date_entry, description_entry, amount_entry, type_variable, category_variable
 
 
-    def render_credit(self):
+    def render_expense(self):
         '''
         Render the credit transaction page
         Create a transaction object and send it to the on_send_transaction_button_click method
@@ -134,7 +133,7 @@ class RenderTab:
             transaction = Transaction(date_entry.get_value(), description_entry.get_value(), amount_entry.get_value(), type_value, category_value, 1)
             self.budget.create_budget(transaction)
 
-        send_transaction_button = Button(self.window_canvas, 200, 450, './assets/sign_in_button.png', None)
+        send_transaction_button = Button(self.window_canvas, 200, 450, './assets/images/accept.png', None)
         send_transaction_button.bind('<Button-1>', lambda event: submit_transaction())
         buttons.append(send_transaction_button)
 
@@ -150,7 +149,7 @@ class RenderTab:
 
         date_entry = CustomEntry(self.window_canvas, "Date", 50, 50)
 
-        def date_validation(id_name):
+        def     date_validation(id_name):
             transactions = self.budget.read_specific_date(id_name, date_entry.get_value())
             self.render_transaction_table(transactions)
 
@@ -317,13 +316,11 @@ class RenderTab:
         table_canvas = tk.Canvas(transparent_window, bg="gray", bd=0, highlightthickness=0)
         table_canvas.pack(fill=tk.BOTH, expand=True)
 
-        # Dessiner un en-tête pour le tableau
         headers = ['Date', 'Description', 'Amount', 'Types', 'Category']
         for i, header in enumerate(headers):
             header_label = tk.Label(table_canvas, text=header, font=("Helvetica", 18), fg="black")
             header_label.grid(row=0, column=i, padx=5, pady=5)
 
-        # Dessiner les données de transaction
         for i, transaction in enumerate(transactions, start=1):
             tk.Label(table_canvas, text=transaction.get_date(), font=("Helvetica", 18)).grid(row=i, column=0, padx=5, pady=5)
             tk.Label(table_canvas, text=transaction.get_description(), font=("Helvetica", 18)).grid(row=i, column=1, padx=5, pady=5)
