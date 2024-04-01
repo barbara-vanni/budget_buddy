@@ -1,6 +1,8 @@
 from Model.User import User
 from Model.UserRepository import UserRepository
 import hashlib
+import re
+
 
 ''' Class Authentication : 
 contains the method authenticate, create_account '''
@@ -38,6 +40,18 @@ class Authentication:
         return True   
 
 
+    def email_enter(self, mail):
+        '''
+        Method for email verification: check if the email is in a valid format
+        '''
+        email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        
+        if re.match(email_pattern, mail):
+            return True
+        else:
+            return False
+        
+
     def password_enter(self, password):
         '''
         method for password verification: check if the password contains at least 8 characters, 1 uppercase, 1 lowercase, 1 digit and 1 special character
@@ -52,7 +66,8 @@ class Authentication:
         method for account creation: check the password input first 
         '''
         check_password = self.password_enter(password)
-        if check_password == True :
+        check_mail = self.email_enter(mail)
+        if check_password == True and check_mail == True:
             self.user_repo.create_user(name, firstname, mail, password)
             User(name, firstname, mail, password)
             return True
