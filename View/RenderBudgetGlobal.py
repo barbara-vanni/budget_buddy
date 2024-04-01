@@ -5,8 +5,8 @@ from View.Screen import Screen
 import tkinter as tk
 
 class RenderBudget:
-    def __init__(self):
-        self.tab_object = RenderTab()
+    def __init__(self, user_id):
+        self.tab_object = RenderTab(user_id)
 
     def render_global_menu(self):
         '''
@@ -96,13 +96,12 @@ class RenderBudget:
 
         deco_button_budget = Button(self.tab_object.get_window_canvas(), 725, 340, "./assets/images/deco_button_budget.png", None)
 
-
-        labels.append(budget_label)
+        labels.extend([budget_label])
 
         self.tab_object.get_screen_object().get_screen().mainloop()
         self.tab_object.get_canvas().update()
 
-render = RenderBudget()
+render = RenderBudget(1)
 
 
 
