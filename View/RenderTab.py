@@ -86,25 +86,25 @@ class RenderTab:
         self.draw_window_canvas()
         self.destroy_entries()
 
-        date_entry = CustomEntry(self.window_canvas, "Date", 200, 120)
-        description_entry = CustomEntry(self.window_canvas, "Description", 200, 190)
-        amount_entry = CustomEntry(self.window_canvas, "Amount", 200, 260)
+        date_entry = CustomEntry(self.window_canvas, "Date (YYYY-MM-DD)", 200, 120)
+        description_entry = CustomEntry(self.window_canvas, "Description", 200, 210)
+        amount_entry = CustomEntry(self.window_canvas, "Amount", 200, 300)
 
         # Create a dropdown menu for the type of transaction
         type_options = ["Debit", "Credit"]
         type_variable = StringVar(self.window_canvas)
         type_variable.set("Choose your type")
         types_dropdown = OptionMenu(self.window_canvas, type_variable, *type_options)
-        types_dropdown.config(bg="white", width=18, font=("Arial", 20), relief="flat", fg="black", activebackground="white", activeforeground="black", highlightthickness=0, bd=0, anchor="w")
-        types_dropdown.place(x=200, y=50)
+        types_dropdown.config(bg="#0045ab", width=18, font=("Arial", 20), relief="flat", fg="white", activebackground="#0045ab", activeforeground="white", highlightthickness=0, bd=0, anchor="w")
+        types_dropdown.place(x=200, y=30)
 
         #Create a dropdown menu for the category of the transaction
         category_options = ["Salaire", "Loyer", "Alimentation", "Loisirs", "Autres"]
         category_variable = StringVar(self.window_canvas)
         category_variable.set("Choose your category")
         category_dropdown = OptionMenu(self.window_canvas, category_variable, *category_options)
-        category_dropdown.config(bg="white", width=18, font=("Arial", 20), relief="flat", fg="black", activebackground="white", activeforeground="black", highlightthickness=0, bd=0, anchor="w")
-        category_dropdown.place(x=200, y=320)
+        category_dropdown.config(bg="#0045ab", width=18, font=("Arial", 20), relief="flat", fg="white", activebackground="#0045ab", activeforeground="white", highlightthickness=0, bd=0, anchor="w")
+        category_dropdown.place(x=200, y=390)
 
         custom_entries.extend([date_entry, description_entry, amount_entry])
         dropdowns.extend([types_dropdown, category_dropdown])
@@ -149,7 +149,7 @@ class RenderTab:
                 register_label.place(x=200, y=300)
                 labels.append(register_label)
 
-        send_transaction_button = Button(self.window_canvas, 200, 450, './assets/images/accept.png', None)
+        send_transaction_button = Button(self.window_canvas, 460, 450, './assets/images/validate.png', None)
         send_transaction_button.bind('<Button-1>', lambda event: submit_transaction())
         buttons.append(send_transaction_button)
 
@@ -163,13 +163,13 @@ class RenderTab:
         '''
         self.destroy_all()
 
-        date_entry = CustomEntry(self.window_canvas, "Date", 50, 50)
+        date_entry = CustomEntry(self.window_canvas, "Date (YYYY-MM-DD)", 200, 270)
 
         def     date_validation(id_name):
             transactions = self.budget.read_specific_date(id_name, date_entry.get_value())
             self.render_transaction_table(transactions)
 
-        valider = Button(self.window_canvas, 600, 45, './assets/images/validate.png', None)
+        valider = Button(self.window_canvas, 450, 320, './assets/images/validate.png', None)
         valider.bind('<Button-1>', lambda event: date_validation(1))
 
         custom_entries.append(date_entry)
@@ -186,13 +186,13 @@ class RenderTab:
 
         self.destroy_all()
 
-        category_entry = CustomEntry(self.window_canvas, "Category", 50, 50)
+        category_entry = CustomEntry(self.window_canvas, "Category", 200, 270)
 
         def category_validation(id_name):
             transactions = self.budget.read_specific_category(category_entry.get_value(), id_name)
             self.render_transaction_table(transactions)
 
-        valider = Button(self.window_canvas, 600, 45, './assets/images/validate.png', None)
+        valider = Button(self.window_canvas, 450, 320, './assets/images/validate.png', None)
         valider.bind('<Button-1>', lambda event: category_validation(1))
 
         custom_entries.append(category_entry)
@@ -209,13 +209,13 @@ class RenderTab:
 
         self.destroy_all()
 
-        types_entry = CustomEntry(self.window_canvas, "Type", 50, 50)
+        types_entry = CustomEntry(self.window_canvas, "Type", 200, 270)
 
         def types_validation(id_name):
             transactions = self.budget.read_specific_type(types_entry.get_value(), id_name)
             self.render_transaction_table(transactions)
 
-        send_transaction_button = Button(self.window_canvas, 600, 45, './assets/images/validate.png', None)
+        send_transaction_button = Button(self.window_canvas, 450, 320, './assets/images/validate.png', None)
         send_transaction_button.bind('<Button-1>', lambda event: types_validation(1))
 
         custom_entries.append(types_entry)
@@ -240,10 +240,12 @@ class RenderTab:
                 transactions = self.budget.read_by_descending_money(id_user)
                 self.render_transaction_table(transactions)
 
-        assend_button = Button(self.window_canvas, 50, 50, './assets/images/validate.png', None)
+        assend_image = Image(self.window_canvas, 250, 200, './assets/images/ascending.png')
+        assend_button = Button(self.window_canvas, 450, 200, './assets/images/validate.png', None)
         assend_button.bind('<Button-1>', lambda event: order_validation(1, "assend"))
 
-        descend_button = Button(self.window_canvas, 350, 50, './assets/images/validate.png', None)
+        descend_image = Image(self.window_canvas, 250, 300, './assets/images/descending.png')
+        descend_button = Button(self.window_canvas,450, 300, './assets/images/validate.png', None)
         descend_button.bind('<Button-1>', lambda event: order_validation(1, "descend"))
 
         buttons.extend([assend_button, descend_button])
@@ -259,14 +261,14 @@ class RenderTab:
 
         self.destroy_all()
 
-        from_date_entry = CustomEntry(self.window_canvas, "From", 20, 50)
-        to_date_entry = CustomEntry(self.window_canvas, "To", 380, 50)
+        from_date_entry = CustomEntry(self.window_canvas, "From", 200, 230)
+        to_date_entry = CustomEntry(self.window_canvas, "To", 200, 300)
 
         def date_to_date_validation(id_name):
             transactions = self.budget.read_between_dates(id_name, from_date_entry.get_value(), to_date_entry.get_value())
             self.render_transaction_table(transactions)
 
-        valider = Button(self.window_canvas, 350, 150, './assets/images/validate.png', None)
+        valider = Button(self.window_canvas, 450, 350, './assets/images/validate.png', None)
         valider.bind('<Button-1>', lambda event: date_to_date_validation(1))
 
         custom_entries.extend([from_date_entry, to_date_entry])
@@ -283,22 +285,22 @@ class RenderTab:
 
         total_credit, total_debit = self.budget.debit_credit(1)
 
-        total_credit_label = tk.Label(self.window_canvas, text="Total Credit: " + str(total_credit), font=("Helvetica", 22), fg="black")
-        total_credit_label.place(x=50, y=50)
+        total_credit_label = tk.Label(self.window_canvas, text="Total Credit: " + str(total_credit), font=("Helvetica", 22), fg="white", bg="#0045ab")
+        total_credit_label.place(x=200, y=210)
 
-        total_debit_label = tk.Label(self.window_canvas, text="Total Debit: " + str(total_debit), font=("Helvetica", 22), fg="black")
-        total_debit_label.place(x=50, y=200)
+        total_debit_label = tk.Label(self.window_canvas, text="Total Debit: " + str(total_debit), font=("Helvetica", 22), fg="white", bg="#0045ab")
+        total_debit_label.place(x=200, y=315)
 
         total = self.budget.total_account(1)
         if total < 0:
-            total_label = tk.Label(self.window_canvas, text="Total: " + str(total), font=("Helvetica", 22), fg="red")
-            overdraft_label = tk.Label(self.window_canvas, text="You're in Overdaft", font=("Helvetica", 22), fg="red")
-            total_label.place(x=50, y=350)
-            overdraft_label.place(x=50, y=400)
+            total_label = tk.Label(self.window_canvas, text="Total: " + str(total), font=("Helvetica", 22), fg="#0045ab", bg="red")
+            overdraft_label = tk.Label(self.window_canvas, text="You're in Overdaft", font=("Helvetica", 22), fg="#0045ab", bg="red")
+            total_label.place(x=200, y=420)
+            overdraft_label.place(x=200, y=470)
             labels.extend([total_credit_label, total_debit_label, total_label, overdraft_label])
         else:
-            total_label = tk.Label(self.window_canvas, text="Total: " + str(total), font=("Helvetica", 22), fg="green")
-            total_label.place(x=50, y=400)
+            total_label = tk.Label(self.window_canvas, text="Total: " + str(total), font=("Helvetica", 22), fg="yellow", bg="#0045ab")
+            total_label.place(x=200, y=420)
             labels.extend([total_credit_label, total_debit_label, total_label])
 
         self.screen_object.get_screen().mainloop()
