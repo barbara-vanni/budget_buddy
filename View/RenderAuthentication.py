@@ -4,8 +4,11 @@ from View.Button import Button
 from View.Screen import Screen
 from Controler.Authentication import Authentication
 from View.menu_current_render import *
-import View.menu_current_render as menu_current_render
 from View.RenderBudgetGlobal import RenderBudget
+
+'''
+This class is responsible for rendering the authentication page
+'''
 
 
 class RenderAuthentication:
@@ -14,7 +17,6 @@ class RenderAuthentication:
         self.canvas = self.screen_object.get_canvas()
         self.custom_entries = []
         self.authentication = Authentication()
-        self.menu_global = RenderBudget(self.screen_object)
 
     def get_screen_object(self):
         return self.screen_object
@@ -22,6 +24,7 @@ class RenderAuthentication:
     def draw_canvas(self):
         self.screen_object.get_canvas().pack()
     
+    #First page of the application where you can chose to sign in or log in 
     def render_main_menu(self):
 
         for entry in self.custom_entries:
@@ -40,7 +43,7 @@ class RenderAuthentication:
         self.screen_object.get_screen().mainloop()
         self.canvas.update()
 
-
+    #Check if the password is valid and create the account in the database
     def check_sign_in(self, entry1, entry2, entry3, entry4):
         name = entry1.get_value()
         username = entry2.get_value()
@@ -54,6 +57,7 @@ class RenderAuthentication:
         else:
             print("Password not valid")            
 
+    #Render the sign in page with the inputs
     def render_sign_in(self):
 
         for entry in self.custom_entries:
@@ -76,15 +80,21 @@ class RenderAuthentication:
         self.screen_object.get_screen().mainloop()
         self.canvas.update()
 
+    
+    #Check if the email and password are correct and destroy the actual window to render the budget menu
     def check_authenticate(self, entry5, entry6):
         email = entry5
         password = entry6
         if self.authentication.authenticate(email, password):
             print("Connected")
-            menu_current_render.set_state(self.menu_global.render_global_menu)
+            if self.screen_object.get_screen().winfo_exists():
+                self.screen_object.get_screen().destroy()
+            budget_menu = RenderBudget()
+            set_state(budget_menu.render_global_menu())
         else:
             print("Wrong mail or password")
 
+    #Render the log in page with the inputs
     def render_log_in(self):
 
         for entry in self.custom_entries:
@@ -107,5 +117,3 @@ class RenderAuthentication:
         self.screen_object.get_screen().mainloop()
         self.canvas.update()
 
-
-auth = RenderAuthentication()

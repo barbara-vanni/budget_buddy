@@ -17,8 +17,6 @@ class RenderBudget:
     def draw_canvas(self):
         self.canvas.pack()
 
-    # def draw_canvas_window(self):
-    #     self.screen_object.get_window_canvas().pack()
 
     def render_global_menu(self):
         '''
