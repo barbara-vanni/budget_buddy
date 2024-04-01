@@ -1,4 +1,4 @@
-from View.RenderTab import RenderTab
+from View.RenderTab import *
 from View.Image import Image
 from View.Button import Button
 from View.Screen import Screen
@@ -49,12 +49,8 @@ class RenderBudget:
         transaction_label = tk.Label(self.tab_object.get_window_canvas(), text="Transaction", font=("Helvetica", 20), bg="#0045ab", fg="white")
         transaction_label.place(x=730, y=40)
 
-        credit_button = Button(self.tab_object.get_window_canvas(), 725, 160, "./assets/images/credit_button.png", None)
-        credit_button.bind('<Button-1>', lambda event: self.tab_object.render_expense())
-        if credit_button.bind('<Button-1>', lambda event: self.tab_object.render_expense()) == 'break':
-            self.tab_object.destroy_all()
-
-
+        credit_button = Button(self.tab_object.get_window_canvas(), 750, 100, "./assets/images/credit_button.png", None)
+        credit_button.bind('<Button-1>', lambda event: self.tab_object.render_credit())
 
         date_button = Button(self.tab_object.get_window_canvas(), 725, 220, "./assets/images/date_button.png", None)
         date_button.bind('<Button-1>', lambda event: self.tab_object.render_date())
@@ -70,6 +66,8 @@ class RenderBudget:
 
         periods_button = Button(self.tab_object.get_window_canvas(), 725, 460, "./assets/images/date_sort_button.png", None)
         periods_button.bind('<Button-1>', lambda event: self.tab_object.render_periods())
+
+        labels.append(transaction_label)
 
         self.tab_object.get_screen_object().get_screen().mainloop()
         self.tab_object.get_canvas().update()
@@ -95,8 +93,6 @@ class RenderBudget:
 
         graphiques_button = Button(self.tab_object.get_window_canvas(), 725, 220, "./assets/images/graph_button.png", None)
         graphiques_button.bind('<Button-1>', lambda event: self.tab_object.render_graphic())
-
-        deco_button_budget = Button(self.tab_object.get_window_canvas(), 725, 340, "./assets/images/deco_button_budget.png", None)
 
         self.tab_object.get_screen_object().get_screen().mainloop()
         self.tab_object.get_canvas().update()

@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 custom_entries = []
 buttons = []
 labels = []
+dropdowns = []
 
 class RenderTab:
     def __init__(self):
@@ -62,6 +63,13 @@ class RenderTab:
         for label in labels:
             label.destroy()
 
+    def destroy_dropdowns(self):
+        '''
+        Destroy all the dropdowns in the dropdowns list
+        '''
+        for dropdown in dropdowns:
+            dropdown.destroy()
+
     def destroy_all(self):
         '''
         Destroy all the entries, buttons and labels
@@ -69,6 +77,7 @@ class RenderTab:
         self.destroy_entries()
         self.destroy_buttons()
         self.destroy_labels()
+        self.destroy_dropdowns()
 
     def render(self):
         '''
@@ -96,8 +105,11 @@ class RenderTab:
         category_dropdown = OptionMenu(self.window_canvas, category_variable, *category_options)
         category_dropdown.config(bg="white", width=18, font=("Arial", 20), relief="flat", fg="black", activebackground="white", activeforeground="black", highlightthickness=0, bd=0, anchor="w")
         category_dropdown.place(x=200, y=320)
-        return date_entry, description_entry, amount_entry, type_variable, category_variable
 
+        custom_entries.extend([date_entry, description_entry, amount_entry])
+        dropdowns.extend([types_dropdown, category_dropdown])
+
+        return date_entry, description_entry, amount_entry, type_variable, category_variable
 
     def render_expense(self):
         '''
@@ -112,9 +124,6 @@ class RenderTab:
                 type_value = "debit"
             elif type_variable.get() == "Credit":
                 type_value = "credit"
-            else:
-                print("Type must be credit or debit")
-                return
 
             if category_variable.get() == "Salaire":
                 category_value = "salaire"
@@ -126,12 +135,19 @@ class RenderTab:
                 category_value = "loisirs"
             elif category_variable.get() == "Autres":
                 category_value = "autres"
-            else:
-                print("Category must be salaire, loyer, alimentation, loisirs or autres")
-                return
 
             transaction = Transaction(date_entry.get_value(), description_entry.get_value(), amount_entry.get_value(), type_value, category_value, 1)
             self.budget.create_budget(transaction)
+            if self.budget.total_account(1) < 0:
+                register_label = tk.Label(self.window_canvas, text="Your Transaction have been register", font=("Helvetica", 22), fg="green")
+                register_label.place(x=200, y=300)
+                overdraft_label = tk.Label(self.window_canvas, text="You're in Overdaft", font=("Helvetica", 22), fg="red")
+                overdraft_label.place(x=200, y=400)
+                labels.extend([register_label, overdraft_label])
+            else:
+                register_label = tk.Label(self.window_canvas, text="Your Transaction have been register", font=("Helvetica", 22), fg="green")
+                register_label.place(x=200, y=300)
+                labels.append(register_label)
 
         send_transaction_button = Button(self.window_canvas, 200, 450, './assets/images/accept.png', None)
         send_transaction_button.bind('<Button-1>', lambda event: submit_transaction())
