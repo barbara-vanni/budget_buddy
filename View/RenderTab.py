@@ -139,9 +139,9 @@ class RenderTab:
             transaction = Transaction(date_entry.get_value(), description_entry.get_value(), amount_entry.get_value(), type_value, category_value, 1)
             self.budget.create_budget(transaction)
             if self.budget.total_account(1) < 0:
-                register_label = tk.Label(self.window_canvas, text="Your Transaction have been register", font=("Helvetica", 22), fg="green")
+                register_label = tk.Label(self.window_canvas, text="Your Transaction have been register", font=("Helvetica", 22), fg="yellow", bg="#0045ab")
                 register_label.place(x=200, y=300)
-                overdraft_label = tk.Label(self.window_canvas, text="You're in Overdaft", font=("Helvetica", 22), fg="red")
+                overdraft_label = tk.Label(self.window_canvas, text="You're in Overdaft", font=("Helvetica", 22), fg="#0045ab", bg="red")
                 overdraft_label.place(x=200, y=400)
                 labels.extend([register_label, overdraft_label])
             else:
