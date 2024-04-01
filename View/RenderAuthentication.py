@@ -89,7 +89,7 @@ class RenderAuthentication:
             print("Connected")
             if self.screen_object.get_screen().winfo_exists():
                 self.screen_object.get_screen().destroy()
-            budget_menu = RenderBudget()
+            budget_menu = RenderBudget(1)
             set_state(budget_menu.render_global_menu())
         else:
             print("Wrong mail or password")

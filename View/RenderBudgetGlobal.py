@@ -6,8 +6,8 @@ import tkinter as tk
 
 class RenderBudget:
     def __init__(self, user_id):
-        self.tab_object = RenderTab(user_id)
         self.screen_object = Screen()
+        self.tab_object = RenderTab(self.screen_object, user_id)
         self.canvas = self.screen_object.get_canvas()
 
 
@@ -111,7 +111,7 @@ class RenderBudget:
         self.tab_object.get_screen_object().get_screen().mainloop()
         self.tab_object.get_canvas().update()
 
-render = RenderBudget(1)
+
 
 
 

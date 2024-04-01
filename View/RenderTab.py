@@ -15,8 +15,8 @@ dropdowns = []
 images = []
 
 class RenderTab:
-    def __init__(self, user_id):
-        self.screen_object = Screen()
+    def __init__(self, screen, user_id):
+        self.screen_object = screen
         self.canvas = self.screen_object.get_canvas()
         self.window_canvas = self.screen_object.get_window_canvas()
         self.budget = Budget()
