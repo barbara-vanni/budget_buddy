@@ -3,6 +3,7 @@ from View.Image import Image
 from View.Button import Button
 from View.Screen import Screen
 import tkinter as tk
+from View.logout import *
 
 class RenderBudget:
     def __init__(self, user_id, user_name):
@@ -36,7 +37,7 @@ class RenderBudget:
         budget_button.bind('<Button-1>', lambda event: self.render_budget())
 
         deconnexion_button = Button(self.tab_object.get_canvas(), 800, 11, "./assets/images/deco_button.png", None)
-        deconnexion_button.bind('<Button-1>', lambda event: self.render_deconnexion())
+        deconnexion_button.bind('<Button-1>', lambda event: self.render_logout())
 
         welcome_label = tk.Label(self.tab_object.get_canvas(), text=f"Welcome {self.user_name}", font=("Helvetica", 16), bg="#0045ab", fg="white")
         welcome_label.place(x=10, y=20)
@@ -106,13 +107,18 @@ class RenderBudget:
         graphiques_button.bind('<Button-1>', lambda event: self.tab_object.render_graphic())
 
         deco_button_budget = Button(self.tab_object.get_window_canvas(), 725, 340, "./assets/images/deco_button_budget.png", None)
+        deconnexion_button.bind('<Button-1>', lambda event: self.render_logout())
 
         labels.extend([budget_label])
 
         self.tab_object.get_screen_object().get_screen().mainloop()
         self.tab_object.get_canvas().update()
 
-
-
-
-
+    def render_logout(self):
+        '''
+        Render the logout page button page
+        '''
+        self.tab_object.destroy_all()
+        if self.screen_object.get_screen().winfo_exists():
+            self.screen_object.get_screen().destroy()
+        logout()

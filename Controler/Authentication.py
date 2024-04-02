@@ -63,7 +63,7 @@ class Authentication:
         '''
         method for password verification: check if the password contains at least 8 characters, 1 uppercase, 1 lowercase, 1 digit and 1 special character
         '''
-        autorized_Special_Char = "!@#$%^&*"
+        autorized_Special_Char = "!@#$%^&*+"
         if len(password) < 8 or not any(char.isupper() for char in password) or not any(char.islower() for char in password) or not any(char in autorized_Special_Char for char in password) or not any(char.isdigit() for char in password):
             return False
         return True

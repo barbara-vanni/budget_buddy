@@ -355,7 +355,7 @@ class RenderTab:
         total_debit_label = tk.Label(self.window_canvas, text="Total Debit: " + str(total_debit), font=("Helvetica", 22), fg="white", bg="#0045ab")
         total_debit_label.place(x=200, y=315)
 
-        total = self.budget.total_account(1)
+        total = self.budget.total_account(self.user_id)
         if total < 0:
             total_label = tk.Label(self.window_canvas, text="Total: " + str(total), font=("Helvetica", 22), fg="#0045ab", bg="red")
             overdraft_label = tk.Label(self.window_canvas, text="You're in Overdaft", font=("Helvetica", 22), fg="#0045ab", bg="red")
