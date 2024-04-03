@@ -97,7 +97,7 @@ class RenderBudget:
         background_image = Image(self.tab_object.get_window_canvas(), 0, 0, './assets/images/bcg_window.png')
         background_image.draw()
 
-        budget_label = tk.Label(self.tab_object.get_window_canvas(), text=f"Welcome {self.user_name}", font=("Helvetica", 20), bg="#0045ab", fg="white")
+        budget_label = tk.Label(self.tab_object.get_window_canvas(), text=f"Budget", font=("Helvetica", 20), bg="#0045ab", fg="white")
         budget_label.place(x=760, y=40)
 
         soldes_button = Button(self.tab_object.get_window_canvas(), 725, 160, "./assets/images/balance_button.png", None)

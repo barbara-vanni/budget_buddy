@@ -131,6 +131,7 @@ class RenderTab:
         Create a transaction object and send it to the on_send_transaction_button_click method
         '''
         self.destroy_buttons()
+        self.destroy_all()
         date_entry, description_entry, amount_entry, type_variable, category_variable = self.render()
 
         def submit_transaction():
@@ -154,13 +155,13 @@ class RenderTab:
             self.budget.create_budget(transaction)
             if self.budget.total_account(1) < 0:
                 register_label = tk.Label(self.window_canvas, text="Your Transaction have been register", font=("Helvetica", 22), fg="yellow", bg="#0045ab")
-                register_label.place(x=200, y=300)
+                register_label.place(x=50, y=455)
                 overdraft_label = tk.Label(self.window_canvas, text="You're in Overdaft", font=("Helvetica", 22), fg="#0045ab", bg="red")
-                overdraft_label.place(x=200, y=400)
+                overdraft_label.place(x=50, y=495)
                 labels.extend([register_label, overdraft_label])
             else:
-                register_label = tk.Label(self.window_canvas, text="Your Transaction have been register", font=("Helvetica", 22), fg="green")
-                register_label.place(x=200, y=300)
+                register_label = tk.Label(self.window_canvas, text="Your Transaction have been register", font=("Helvetica", 22), fg="yellow", bg="#0045ab")
+                register_label.place(x=50, y=455)
                 labels.append(register_label)
 
         send_transaction_button = Button(self.window_canvas, 460, 450, './assets/images/validate.png', None)
@@ -213,7 +214,7 @@ class RenderTab:
         category_variable.set("Choose your category")
         category_dropdown = OptionMenu(self.window_canvas, category_variable, *category_options)
         category_dropdown.config(bg="#0045ab", width=18, font=("Arial", 20), relief="flat", fg="white", activebackground="#0045ab", activeforeground="white", highlightthickness=0, bd=0, anchor="w")
-        category_dropdown.place(x=150, y=250)
+        category_dropdown.place(x=200, y=270)
 
         def category_validation(id_name):
             if category_variable.get() == "Salaire":
@@ -229,7 +230,7 @@ class RenderTab:
             transactions = self.budget.read_specific_category(category_value, id_name)
             self.render_transaction_table(transactions)
 
-        valider = Button(self.window_canvas, 500, 245, './assets/images/validate.png', None)
+        valider = Button(self.window_canvas, 450, 320, './assets/images/validate.png', None)
         valider.bind('<Button-1>', lambda event: category_validation(self.user_id))
 
         buttons.append(valider)
@@ -256,7 +257,7 @@ class RenderTab:
         type_variable.set("Choose your type")
         types_dropdown = OptionMenu(self.window_canvas, type_variable, *type_options)
         types_dropdown.config(bg="#0045ab", width=18, font=("Arial", 20), relief="flat", fg="white", activebackground="#0045ab", activeforeground="white", highlightthickness=0, bd=0, anchor="w")
-        types_dropdown.place(x=150, y=250)
+        types_dropdown.place(x=200, y=270)
 
         def types_validation(id_name):
             if type_variable.get() == "Debit":
@@ -266,7 +267,7 @@ class RenderTab:
             transactions = self.budget.read_specific_type(type_value, id_name)
             self.render_transaction_table(transactions)
 
-        send_transaction_button = Button(self.window_canvas, 500, 245, './assets/images/validate.png', None)
+        send_transaction_button = Button(self.window_canvas, 450, 320, './assets/images/validate.png', None)
         send_transaction_button.bind('<Button-1>', lambda event: types_validation(self.user_id))
 
         buttons.append(send_transaction_button)
